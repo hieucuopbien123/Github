@@ -1,0 +1,52 @@
+Gitignore là file có tên .gitignore do Git quy định. Nó sẽ liệt kê những file k mong muốn cho vào git.
+Nó giúp giảm lượng tài nguyên lưu trữ ở server vì ta có thể chọn những file mà IDE tự sinh ra trong quá trình build project. VD: k push lên git cái thư mục node modules
+Có thể bỏ qua các file cấu hình đường dẫn máy tính cá nhân. Các file này gây ra việc k build được project khi checkout về các máy của thành viên khác.
+Giúp giữ kín các file nếu như repository đang là public. Các file cấu hình hay tài khoản mật khẩu quan trọng nên tách ở file riêng và k push lên git. Ví dụ dùng file .env trong NodeJS
+
+Ta đặt file .gitignore vào thư mục root project thì git sẽ check và bỏ qua các file file trong đó. Đó mới là điều kiện cần, điều kiện đủ phải là files k có git cache thì git mới bỏ qua, nếu file mà nằm trong git cache thì .gitignore sẽ vô tác dụng
+
+Code:
+#comment or tách các dòng
+Ghi tên file or ghi cả thư mục/ cũng bỏ qua thư mục luôn. VD: file.exe, folder/ => chú ý thư mục nên specific / đằng sau or nó có thể là file or symbolic link.
+Dấu ! để phủ định. VD: !folder/file.exe
+Dùng * để tìm các file cùng định dạng. VD: *.xml -> bỏ qua tất cả các file đuôi .xml
+=> Chú ý nếu chỉ rõ đường dẫn chỉ có hiệu lực cùng cấp. VD: config/*.xml => bỏ qua file config/abc.xml nhưng k có hiệu lực với config/sub/abc.xml
+Sử dụng ** khi thư mục k định rõ tên. Vd: **/foo sẽ bỏ qua mọi file or thư mục có tên foo mọi nơi trong project; folder/** sẽ bỏ qua mọi file trong thư mục tên là folder/
+
+Đôi khi IDE or project tự sinh file .gitignore
+.gitignore ảnh hưởng mọi file và thư mục sibling và descendants nên thg thì 1 project chỉ cần 1 file .gitignore là đủ trừ khi dự án quá lớn
+
+Tool: https://www.toptal.com/developers/gitignore giúp tạo file gitignore, nó có sẵn các file mà thg bỏ qua trong project như .env,..
+Tùy các project khác nhau mà sẽ sinh ra file khác nhau
+
+Tình huống: Ta join vào project, pull code về và bị conflict liên tục vì mấy file rác sinh ra. Khi đó ta nhét các file đó vào trong .gitignore r xóa file rác đi và commit lên-> 1 ông khác lại pull về và tạo lại file rác đó và ông ta cũng push lên-> file rác đó vẫn dính vào git bth dù đã nhét vào .gitignore => NN là vì file đó được git cache thu nạp r nên gitignore k có tác dụng-> ta có thể xóa bỏ nó bằng dòng lệnh: 
+git rm -r --cached /<link to file or folder đó> thì nó k còn bị dinh gitcache nx và k hiện nx. Nhưng thông thường khi thêm gitignore, ta sẽ xóa bỏ hết file của gitcache luôn để gitignore hoạt động đúng(xóa bỏ hết file của git cache thoải mái chả ảnh hưởng gì đâu) với:
+git rm -r --cached
+sau đó thao tác bth: add commit push
+
+
+Khi khởi tạo 1 dự án trống mà muốn push lên github: vào folder trống-> touch .gitkeep -> add, commit, push lên
+Do github nó k chấp nhận vc push lên 1 folder trống, nó sẽ k xuất hiện-> khi đó phải tạo 1 file bất kỳ trong folder để push đc nó lên. Người ta cứ thích push khi mà folder trống đấy-> họ đặt cho file đó 1 cái tên là .gitkeep => chống được cả .gitignore
+
+
+.gitattributes là file cấu hình các thuộc tính trong git. Có tool sinh ra file .gitattributes cho các loại dự án khác nhau. Với nó ta có thể bảo khi các file được commit hay làm gì thì loại file nào sẽ thao tác được thêm tính năng nào đó như so sánh sự khác biệt hay lọc => ta k cần đi sâu
+
+Khi ta có 1 file-> add file đó và commit lên git -> xóa file đó đi-> git checkout <link đến file đó> -> file đó sẽ tự được lấy lại từ git local repos đã commit
+Vc commit có vai trò là lưu lại các thay đổi ở thời điểm hiện tại.
+
+git tag = git tag -l = git tag --list => liệt kê các tag
+git tag -n => liệt kê các tag kèm message
+git tag -a <tên tag> -m "Phien ban thu nghiem" => tạo ra 1 tag và gắn vào commit cuối
+git tag -a <tên tag> -m "Phien ban thu nghiem 2" 9fceb02 => tạo 1 tag mới và đánh dấu vào commit cũ nào
+git show <tên tag> => xem thông tin về commit được gắn tag nào
+git tag <tên tag cũ> <tên tag cũ> -f -m "<nd mới>" => update tag cũ thành nội dung mới là gì
+git tag <tên tag mới> <tên tag cũ> -f -m "<nd mới>" => tạo ra 1 tag mới cùng vị trí với tag cũ có nd là gì
+=> 1 tag chỉ gắn được vào 1 commit. 
+git push origin <tên tag> -> hàm git push chỉ cập nhập các dữ liệu k có tag
+git push origin --tags -> cập nhập tất cả các tag
+git checkout <tên tag> => trỏ HEAD đến commit được gắn tag nào -> thay thế cho vc dùng mã hash khó nhớ
+git checkout -b <tên branch> <tên tag> => tạo luôn nhánh mới co tên là gì từ commit có gắn với tag name nào
+git push --delete origin <tên tag> => xóa tag nào ở remote
+git tag -d <tên tag> => xóa tag nào ở local
+
+Trong github có thể fork 1 project có sẵn để làm vc với nó trong 1 project mới của ta, đó cũng là 1 cách đóng góp cho dự án mã nguồn mở, phát triển sản phẩm mới dựa trên nền sản phẩm cũ

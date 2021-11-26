@@ -1,0 +1,26 @@
+git --version
+git --help
+git config <>
+git init
+git add <>
+git status <>
+git commit <>
+git reset <>
+git log <>
+gitk
+git merge <tên branch> -m "<comment>"
+git diff <>
+git remote <>
+git clone <path> <des>
+git branch <>
+git checkout <>
+git switch <>
+git rm --cached <tên file>
+git push <>
+git mergetool <>
+git rebase <>
+git push <>
+git pull <>
+git submodule add <remote_url> <destination_folder>
+
+
