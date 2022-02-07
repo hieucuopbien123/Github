@@ -3,7 +3,7 @@ Nó giúp giảm lượng tài nguyên lưu trữ ở server vì ta có thể ch
 Có thể bỏ qua các file cấu hình đường dẫn máy tính cá nhân. Các file này gây ra việc k build được project khi checkout về các máy của thành viên khác.
 Giúp giữ kín các file nếu như repository đang là public. Các file cấu hình hay tài khoản mật khẩu quan trọng nên tách ở file riêng và k push lên git. Ví dụ dùng file .env trong NodeJS
 
-Ta đặt file .gitignore vào thư mục root project thì git sẽ check và bỏ qua các file file trong đó. Đó mới là điều kiện cần, điều kiện đủ phải là files k có git cache thì git mới bỏ qua, nếu file mà nằm trong git cache thì .gitignore sẽ vô tác dụng
+Ta đặt file .gitignore vào thư mục root project thì git sẽ check và bỏ qua các file trong đó. Đó mới là điều kiện cần, điều kiện đủ phải là files k có git cache thì git mới bỏ qua, nếu file mà nằm trong git cache thì .gitignore sẽ vô tác dụng
 
 Code:
 #comment or tách các dòng
@@ -11,7 +11,7 @@ Ghi tên file or ghi cả thư mục/ cũng bỏ qua thư mục luôn. VD: file.
 Dấu ! để phủ định. VD: !folder/file.exe
 Dùng * để tìm các file cùng định dạng. VD: *.xml -> bỏ qua tất cả các file đuôi .xml
 => Chú ý nếu chỉ rõ đường dẫn chỉ có hiệu lực cùng cấp. VD: config/*.xml => bỏ qua file config/abc.xml nhưng k có hiệu lực với config/sub/abc.xml
-Sử dụng ** khi thư mục k định rõ tên. Vd: **/foo sẽ bỏ qua mọi file or thư mục có tên foo mọi nơi trong project; folder/** sẽ bỏ qua mọi file trong thư mục tên là folder/
+Sử dụng ** khi thư mục k định rõ tên. Vd: **/foo sẽ bỏ qua mọi file or thư mục có tên foo mọi nơi trong project; folder/** sẽ bỏ qua mọi file trong thư mục tên là folder/ => khá thừa
 
 Đôi khi IDE or project tự sinh file .gitignore
 .gitignore ảnh hưởng mọi file và thư mục sibling và descendants nên thg thì 1 project chỉ cần 1 file .gitignore là đủ trừ khi dự án quá lớn

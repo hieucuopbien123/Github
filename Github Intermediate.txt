@@ -249,9 +249,11 @@ Chú ý hàm remote add là thêm 1 dự án mới toanh, hàm clone là dùng t
 
 Chú ý khi ta thao tác trên 1 nhánh và commit 2 lần-> sau đó merge với master và push lên-> cái master tự có thêm 2 commit kia, chứ nó k gom lại làm 1 commit merge. Nếu muốn giảm số lượng commit rác thành 1 commit thì phải dùng squash.
 Tương tự commit nhiều lần ở local r push lên repos thì repos sẽ có tất cả các commit chứ k bị gom lại làm 1.
+Lệnh git push origin <tên nhánh remote> là push nhánh gì của local lên remote trùng tên nhé. Tức là ở local ta đang ở nhánh test nhưng push origin master thì nhánh master ở local sẽ push lên master của remote. Tức là buộc local phải có nhánh master, nếu k sẽ lỗi. Lệnh git push k thôi sẽ push tất cả
+Khi ta checkout mã hash để thao tác ở chế độ detach trên 1 nhánh tạm thời dùng commit cũ thì khi chuyển nhánh thì nhánh tạm thời sẽ bị xóa. Còn k thì ta có thể thao tác với nhánh tạm thời thoải mái. Tuy nhiên nên switch -c để tạo ra 1 nhánh chuẩn chứ đừng hoạt động trên nhánh tạm thời
 
 Tổng kết các thứ:
-Ta có thể tạo 1 dự án mới và thao tác: init->git remote add
+Ta có thể tạo 1 dự án mới và thao tác: init-> remote add
 Ta có thể clone 1 dự án mẫu về và dùng nó thành 1 dự án mới của ta: git clone-> remote remove origin-> lên github tạo 1 repos mới -> remote add origin mới của ta
 Ta có thể dùng 1 dự án có sẵn trong dự án đang làm dở của ta: ở trong dự án đang làm dở-> git submodule add <url> <submodule>
 Ta có thể dùng 1 commit cũ của dự án hiện tại thành hiện tại của dự án hiện tại: ở dự án hiện tại-> git checkout <mã hash commit> . -> commit -> push
@@ -264,3 +266,8 @@ Ta có thể gom các commit ở local lại làm ở local và commit lên gith
 Ta có thể commit liên tục lên local, quay lại commit cũ của local r code tiếp, lại commit và push cái hiện tại lên github: git checkout <mã hash> -> sửa đổi -> add -> commit-> git switch -c "tên nhánh mới" -> thế là có nhánh mới của commit cũ, làm gì tiếp thì tùy / git switch -c <tên nhánh> <mã hash>
 Ta có thể quay về trạng thái staged nếu có, k thì commit gần nhất: git restore .
 Ta sửa file và git add nó, chưa commit, nhưng r lại muốn quay lại commit trước đó chứ kp sau khi git add .: git reset --hard 
+
+Tình huống: đang ở nhánh master, ta checkout sang 1 nhánh mới, thao tác trên nhánh mới, nhưng r muốn nhánh master có những thứ đó => commit lên r quay về master và merge nó với nhanh đó
+Tình huống tương tự nhưng đang ở nhánh detach tạm thời => ta k thể có cách nào mà k tạo nhánh mới được vì k merge được, buộc tạo nhánh mới từ nhánh tạm thời r làm tương tự. Nếu k cho checkout thì ta cứ checkout -f rồi gọi merge thôi
+Tình huống: nếu ta commit -> lại commit --amend -> push thì ok 
+Nhưng nếu ta commit -> push -> lại commit --amend -> push thì éo vì bị khác với remote và phải pull trước-> éo cần ta cứ push -f là được. Nhưng rõ ràng push -f rất toang vì nhánh đó nếu có nhiều người cùng code thì hỏng. Do đó người ta bảo 1 khi đã push lên remote là phải chắc chắn 100% chứ éo phải push lên r lại sửa push lại

@@ -64,6 +64,7 @@ git checkout <hash>
 git checkout -b <tên nhánh mới> 
 git checkout -b <tên nhánh mới> <tên nhánh cũ>
 git checkout -f <tên nhánh cũ>
+git checkout <link to file>
 
 git switch <tên nhánh đã tồn tại>
 git switch -c <tên nhánh chưa có>
