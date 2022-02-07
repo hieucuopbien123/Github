@@ -215,7 +215,8 @@ Nếu muốn fork chỉnh sửa luôn 1 dự án nào: git clone
 khi nó yêu cầu xử lý conflict -> ta sửa r git add . để xác nhận đã solve conflict
 git merge --abort
 
-//!
+khi ta rebase lại gom các commit vào làm 1 thực sự rất tệ. Ta chỉ nên làm v ở local. Nếu remote và local có toàn commit khác nhau do ta rebase thì việc push lên nó lỗi là 2 dự án khác nhau hoàn toàn thì kb lấy cái nào. Khi đó ta phải thêm -f và push nhưng như v k tốt vì các commit cũ của remote sẽ mất hết và theo local. Ta k nên làm v trong dự án lớn làm khó mọi người trong team mà thích merge gì thì chỉ làm mình ta thôi
+
 Tổng kết:
 =>Khởi tạo repos local và liên kết với remote và trỏ tới branch master:
 git init
@@ -240,7 +241,7 @@ Chú ý khi ta thao tác trên github, mọi thao tác của ta đều là local
 Kể cả việc ta tạo branch mới hay làm gì thì hàm commit chỉ thay đổi local, muốn đổi remote thì phải push
 
 Hàm get reset --hard là hàm quay lại commit trước đó trong local repos. Xóa các commit hiện tại cho đến commit cũ nào đó của repos.
-Hàm git reset --hard <hard> là quay lại đến commit nào
+Hàm git reset --hard <hash> là quay lại đến commit nào
 
 HEAD là thú trỏ đến commit nào ở thời điểm hiện tại
 
