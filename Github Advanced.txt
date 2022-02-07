@@ -39,7 +39,7 @@ git tag -n => liệt kê các tag kèm message
 git tag -a <tên tag> -m "Phien ban thu nghiem" => tạo ra 1 tag và gắn vào commit cuối
 git tag -a <tên tag> -m "Phien ban thu nghiem 2" 9fceb02 => tạo 1 tag mới và đánh dấu vào commit cũ nào
 git show <tên tag> => xem thông tin về commit được gắn tag nào
-git tag <tên tag cũ> <tên tag cũ> -f -m "<nd mới>" => update tag cũ thành nội dung mới là gì
+git tag <tên tag cũ> -f -m "<nd mới>" => update tag cũ thành nội dung mới là gì
 git tag <tên tag mới> <tên tag cũ> -f -m "<nd mới>" => tạo ra 1 tag mới cùng vị trí với tag cũ có nd là gì
 => 1 tag chỉ gắn được vào 1 commit. 
 git push origin <tên tag> -> hàm git push chỉ cập nhập các dữ liệu k có tag
@@ -47,6 +47,6 @@ git push origin --tags -> cập nhập tất cả các tag
 git checkout <tên tag> => trỏ HEAD đến commit được gắn tag nào -> thay thế cho vc dùng mã hash khó nhớ
 git checkout -b <tên branch> <tên tag> => tạo luôn nhánh mới co tên là gì từ commit có gắn với tag name nào
 git push --delete origin <tên tag> => xóa tag nào ở remote
-git tag -d <tên tag> => xóa tag nào ở local
+git tag -d <tên tag> => xóa tag nào ở local 
 
 Trong github có thể fork 1 project có sẵn để làm vc với nó trong 1 project mới của ta, đó cũng là 1 cách đóng góp cho dự án mã nguồn mở, phát triển sản phẩm mới dựa trên nền sản phẩm cũ

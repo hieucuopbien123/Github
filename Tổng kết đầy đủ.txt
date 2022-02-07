@@ -102,3 +102,16 @@ git rename rename <old name> <new name>
 git remote show <remote name>
 
 git submodule add <remote_url> <destination_folder>
+
+git tag -l
+git tag -n
+git tag -a <tên tag> -m "<message>" 
+git tag -a <tên tag> -m "<message>" <hash commit>
+git show <tên tag>
+git tag <tên tag cũ> -f -m "<message mới>"
+git tag <tên tag mới> <tên tag cũ> -f -m "<message mới>"
+git tag -d <tên tag>
+git push origin <tên tag>/--tags
+git checkout <tên tag>
+git checkout -b <tên branch> <tên tag>
+git push --delete origin <tên tag>

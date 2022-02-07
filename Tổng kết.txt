@@ -22,5 +22,5 @@ git rebase <>
 git push <>
 git pull <>
 git submodule add <remote_url> <destination_folder>
-
+git tag <>
 
