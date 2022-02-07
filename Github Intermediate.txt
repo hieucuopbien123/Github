@@ -250,7 +250,7 @@ Chú ý hàm remote add là thêm 1 dự án mới toanh, hàm clone là dùng t
 Chú ý khi ta thao tác trên 1 nhánh và commit 2 lần-> sau đó merge với master và push lên-> cái master tự có thêm 2 commit kia, chứ nó k gom lại làm 1 commit merge. Nếu muốn giảm số lượng commit rác thành 1 commit thì phải dùng squash.
 Tương tự commit nhiều lần ở local r push lên repos thì repos sẽ có tất cả các commit chứ k bị gom lại làm 1.
 
-Tổng kết các thứ:
+Tổng kết các thứ
 Ta có thể tạo 1 dự án mới và thao tác: init-> remote add
 Ta có thể clone 1 dự án mẫu về và dùng nó thành 1 dự án mới của ta: git clone-> remote remove origin-> lên github tạo 1 repos mới -> remote add origin mới của ta
 Ta có thể dùng 1 dự án có sẵn trong dự án đang làm dở của ta: ở trong dự án đang làm dở-> git submodule add <url> <submodule>
