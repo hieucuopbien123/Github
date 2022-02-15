@@ -47,6 +47,7 @@ git diff <hash commit 1> <hash commit 2>
 git diff <branch 1> <branch 2>
 
 git clone <path> <des>
+git clone -b <branch> <url>
 
 git branch --remote
 git branch <tên branch mới>

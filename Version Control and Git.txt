@@ -13,7 +13,7 @@ Nó là bộ công cụ giúp ta làm vc với github, giao tiếp giữa máy c
 MSDos là OS đời cũ dùng commandline.
 PowerShell cũng tương tự của widow là cmd, or chính là Git CMD
 Terminal là của Linux hay chính là Git Bash. thực chất ta thao tác với Git là vì cái này là chính
-Terminal trên VSC cũng là Git Bash nhưng lệnh nó hơi khác. Khi vài nodejs thì terminal của VSC có thể dùng cho các package npm, yarn.
+Terminal trên VSC cũng là Git Bash nhưng lệnh nó hơi khác. Khi cài nodejs thì terminal của VSC có thể dùng cho các package npm, yarn.
 =>Ta nên dùng Git bash để thao tác khi cần dùng như Linux
 =>Thay vì sử dụng GUI, ta thg dùng commandline sẽ tiện hơn và nhanh hơn. Ta nên dùng luôn cmd của các editor nếu nó hỗ trợ, nếu k thì dùng gitbash cx đc
 
@@ -22,7 +22,7 @@ Thao tác trên Github:
 Ta có thể tạo 1 dự án chứa code trên mạng, lấy code của người khác về, dùng các tiện ích trên git đơn giản, ví dụ: tạo 1 repository(readme or gitignore), tạo và dùng branch, commit sửa file,lệnh pull request,merge khi ổn,clone từ dự án khác.Giám sát commit,branch or đủ loại trên,comment trên code
 nhánh master luôn là nhánh chứa update mới nhất
 Mọi dự án trên github đều nên dùng 1 file readme
-paste từ bên ngoài vào=> insert
+paste từ bên ngoài vào Bash=> insert
 pwd,ls -lah(h là file size),cd ..,clear,mkdir,touch,nano,cat,rm,cp <src> <des>,git,find . -name "*.",grep "" <tên file>,code.
 vi => chuyển chế độ khỏi INSERT Mode với ESC, :q để thoát, :q! để thoát k lưu
 
