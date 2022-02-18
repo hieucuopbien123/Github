@@ -7,7 +7,7 @@ Stats:<br />
 <img src="https://github-readme-stats.vercel.app/api/pin/?username=hieucuopbien123&repo=Github">
           
 Social:<br />
-<a href=https://www.facebook.com/Thuhieupirate/> <img src="https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white"> </a>
-<a href=https://discord.com/> <img src="https://img.shields.io/badge/%3CServer%3E-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white"> </a>
-<a href=https://www.instagram.com/> <img src="https://img.shields.io/badge/-Instagram-833AB4?style=plastic&logo=Instagram"> </a>
-<a href=https://www.youtube.com/> <img src="https://img.shields.io/badge/<handle>-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white"> </a>
+<a href=https://www.facebook.com/Thuhieupirate/> <img src="https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white"> </a><br />
+<a href=https://discord.com/> <img src="https://img.shields.io/badge/%3CServer%3E-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white"> </a><br />
+<a href=https://www.instagram.com/> <img src="https://img.shields.io/badge/-Instagram-833AB4?style=plastic&logo=Instagram"> </a><br />
+<a href=https://www.youtube.com/> <img src="https://img.shields.io/badge/Youtube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white"> </a><br />
