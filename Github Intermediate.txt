@@ -1,4 +1,4 @@
-Lệnh git init tạo 1 repos local, nó sinh ra 1 thư mục ẩn có tên là .git chứa thông tin mô tả cho repo mới, chứa metadata gồm các thư mục objects, refs,.. Có 1 file tên HEAD cũng được tạo ra trỏ đến commit hiện tại. Nếu ta k muốn push code lên cho mọi người mà chỉ muốn mình ta quản lý phiên bản thì tạo mỗi cái local repos này thôi cũng là dùng git r.
+ệnh git init tạo 1 repos local, nó sinh ra 1 thư mục ẩn có tên là .git chứa thông tin mô tả cho repo mới, chứa metadata gồm các thư mục objects, refs,.. Có 1 file tên HEAD cũng được tạo ra trỏ đến commit hiện tại. Nếu ta k muốn push code lên cho mọi người mà chỉ muốn mình ta quản lý phiên bản thì tạo mỗi cái local repos này thôi cũng là dùng git r.
 git init --bare => tạo 1 repo git chỉ có chức năng lưu trữ, k có thư mục làm việc, thg chỉ dùng để lưu trữ như 1 remote repo như server, từ đó local sẽ lấy về với git clone và local có thể đẩy dữ liệu lên git. Sau khi dùng git init --bare thì như 1 remote repos r, ta có thể tạo 1 local repos remote or clone đến nó đều đc
 => Tức là git init là none bare k cần có ngay 1 server để lưu repo từ xa, còn git init --bare là bare đó. 
 
