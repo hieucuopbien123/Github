@@ -1,0 +1,482 @@
+Github:
+
+
+# Basic
+git --version => hiển thị phiên bản git hiện tại
+git --help 
+
+Sau dấu # là phần comment của cmd: VD: git --version #hiển thị version của git  => vẫn chạy như git --version
+
+#comment or tách các dòng
+Ghi tên file or ghi cả thư mục/ cũng bỏ qua thư mục luôn. VD: file.exe, folder/ => chú ý thư mục nên specific / đằng sau or nó có thể là file or symbolic link.
+Dấu ! để phủ định. VD: !folder/file.exe
+Dùng * để tìm các file cùng định dạng. VD: *.xml -> bỏ qua tất cả các file đuôi .xml
+=> Chú ý nếu chỉ rõ đường dẫn chỉ có hiệu lực cùng cấp. VD: config/*.xml => bỏ qua file config/abc.xml nhưng k có hiệu lực với config/sub/abc.xml
+Sử dụng ** khi thư mục k định rõ tên. Vd: **/foo sẽ bỏ qua mọi file or thư mục có tên foo mọi nơi trong project; folder/** sẽ bỏ qua mọi file trong thư mục tên là folder/ => khá thừa
+
+-> Cấu hình git:
+# Hiển thị danh sách các thiết lập cấu hình
+git config --list
+# Thiết lập tên trên hệ thống git
+git config --global user.name "Tên của Bạn"
+# Thiết lập email
+git config --global user.email emailcuaban@domain.com
+=> các config này được lưu trong file cấu hình của thư mục git
+Ta dùng --global nếu muốn config có hiệu lực với user hiện tại của hệ thống; --system nếu muốn có hiệu lực với mọi user; k có 2 cái đó thì chỉ là chỉnh ở chính cấu hình thư mục .git của dự án, chỉ có tác dụng cho repos hiện tại
+=> Đôi khi có các config ta set làm cho lệnh git bị lỗi => git config --global --edit xong vào trong xóa các config gây lỗi bằng phím delete thủ công và save lại.
+
+-> git rm --cached <tên file> => xóa file đưa vào staged. Nếu xóa bằng tay k thì chỉ là modified và phải git add để đưa vào staged. Bh cần commit để thực sự xóa
+
+-> Các thao tác cơ bản GitBash:
+Tạo 1 repository cho dự án trên github và liên kết nó với git trong máy.
+Thao tác Git trong VSC:
+git init
+git status(kiểm tra TT xem file nào đã add vào trong cái git đó chưa)
+git add <tên file> or git add --all/.
+git commit -m "<comment j>"
+git log(xem danh sách các commit đã hoàn thành) --decorate --graph --oneline
+=>như v là đã có 1 cái dự án trong git r,h cần đồng bộ cái này vs cái trên mạng
+
+=> Xog bh muốn thêm file tiếp:
+git add . (add toàn bộ file vào repo github)
+git commit-m ""
+
+=> Branch: git branch new_branch => nhánh mới tạo ra sẽ có trạng thái như nhánh master hiện tại
+git push -u origin <tên branch hiện tại> (tên branch là master nếu muốn đồng bộ master trong máy lên mạng)
+=> pb: git commit để thay đổi ở local, git push đế khiến central repos đổi như local repos
+
+=> Nếu dùng nhầm repos, muốn cho vào repos khác
+git remote remove origin
+
+=> Nếu k muốn add r remove như v thì:
+git remote set-url origin git://new.url.here
+
+=>Nếu ai đó sửa lên trên github r, ta muốn đồng bộ.
+git pull origin master => nhánh master or
+git branch --set-upstream-to=origin/master master => rồi dùng: git pull
+
+=> Khi có conflict:
+git add . => add tất cả file hiện tại lên github
+git commit -m ""=>lỗi ngay=>cần pull trc khi push
+git pull=>chọn dòng ta muốn luôn=>git add lại, commit,push lên là ok
+=>Khi làm nhiều người, luôn pull trước để xác nhận thay đổi, sau đó mới push vào
+
+=> Ví dụ mình là ng mới tham gia vào dự án:
+git clone <link đến cái repo github kia> +ENTER
+ls rồi xem cat vô file sửa thôi
+
+=> Tạo nhánh riêng để sửa mà k ảnh hưởng source:
+git branch <tên branch> (tạo branch)
+git branch (nhìn xem ta đang ở branch nào)
+git checkout <tên branch> (chuyển sang branch nào,sẽ chỉ hiển thị file branch đó)
+git checkout -b <tên branch>(vừa tạo vừa checkout luôn)=>thao tác tiếp bth
+git checkout -f <tên nhánh> để force việc chuyển đổi\
+=>Khi muốn thêm thử 1 chức năng gây ra nhiều thay đổi nhưng k muốn dổi code hiện tại-> có thể thực hiện trên 1 branch riêng. Sau này thấy code ok quá-> thì merge để biến code nhánh master là nó. Nhánh master bao h cũng là phiên bản mới nhất hoàn hảo nhất còn branch là các lần trước đó
+
+-> Cách làm các thao tác trên thông qua GUI VSC:
+sửa file=>biểu tượng 3->dấu +-> nhập mess->tick v->click 3 chấm=>push/Pull
+
+
+
+# git init:
+Lệnh git init tạo 1 repos local, nó sinh ra 1 thư mục ẩn có tên là .git chứa thông tin mô tả cho repo mới, chứa metadata gồm các thư mục objects, refs,.. Có 1 file tên HEAD cũng được tạo ra trỏ đến commit hiện tại. Nếu ta k muốn push code lên cho mọi người mà chỉ muốn mình ta quản lý phiên bản thì tạo mỗi cái local repos này thôi cũng là dùng git r.
+git init --bare => tạo 1 repo git chỉ có chức năng lưu trữ, k có thư mục làm việc, thg chỉ dùng để lưu trữ như 1 remote repo như server, từ đó local sẽ lấy về với git clone và local có thể đẩy dữ liệu lên git. Sau khi dùng git init --bare thì như 1 remote repos r, ta có thể tạo 1 local repos remote or clone đến nó đều đc
+=> Tức là git init là none bare k cần có ngay 1 server để lưu repo từ xa, còn git init --bare là bare đó. 
+
+
+
+# git add
+git add <file/folder> đưa file or folder nào vào cùng staging, có thể add nhiều lần để lấy mỗi lần cuối thành 1 commit. Lệnh git add sẽ đưa file, thư mục vào staging - nếu file/thư mục chưa từng được giám sát bởi git nó sẽ bắt đầu giám sát và tạo snapshot là toàn bộ file/thư mục mới. Nếu đã từng giám sát - thì snapshot là nội dung thay đổi so với commit trước. Vc commit cx chỉ là lưu snapshot vào cơ sở dữ liệu của git.
+Vc lưu lại snapshot của thư mục đang làm việc gọi là đánh chỉ mục index.
+git add *.c => tất cả file đuôi c được giám sát
+git add -u => chỉ cho staged các file đã giám sát từ trước thì add tiếp, bỏ qua các file chưa đc từng được add, vd file mới tạo 
+
+
+
+# git status
+git status: hiển thị sự khác biệt giữa vùng staged và commited -> xem có, vùng staged và working tree, vùng working tree và untracked để quyết định có add r commit k
+tham số: git status -s/--short thì: ' ' unmodified; M modified; A/? added; D deleted; R renamed; C copied; U updated but unmerged; 
+git status --short
+
+
+
+# git commit
+git commit lưu thông tin vùng staging vào CSDL git. commit phát là con trỏ HEAD tự động dịch chuyển đén commit mới nhất. 
+git commit -a -m "Ghi chú về commit" => -a chính là git add . kẹp vào => k nên dùng
+git commit --amend -m "Thông tin về commit" => --amend chính là sửa commit cuối cùng thành commit hiện tại -> 1 cách hay để lưu sửa đổi hiện tại mà k thêm commit mới, tránh để lịch sử có quá nhiều commit rác. Đương nhiên chỉ dùng khi chưa push lên remote repos.
+
+Thật ra mỗi lần commit là nó sinh ra 1 branch mới nhưng branch này ta k thể nhìn thấy trực tiếp trong github browser hay lệnh gitbranch được. Mà chỉ có thể nhìn thấy nó trong danh sách các commit, khi đó mỗi commit sẽ kèm 1 mã hash của lần commit đó. 
+Nếu ta muốn mở project ở lần commit đó: git checkout <mã hash của commit> => lúc này git cmd ta đang thao tác sẽ ở trạng thái HEAD detached và đang ở 1 branch mới. Khi đó ta k thể thao tác commit push hay gì đc nx
+Nếu ta muốn dùng 1 commit cũ của dự án hiện tại vào dự án hiện tại: git checkout <mã hash của commit> . => thêm dấu chấm thì sẽ thành 1 lệnh, ta dùng commit và push lên thì sẽ khiến dự án hiện tại chỉnh sửa thành lúc nó ở 1 commit cũ, điều đó thực hiện trên 1 commit mới
+
+
+
+# git reset
+Lệnh git reset --soft HEAD~1 sẽ hủy commit cuối, HEAD chuyển về commit trước đó, những thay đổi commit cuối chuyển về staging. Đương nhiên chỉ dùng khi chưa push lên remote
+git reset --hard HEAD~1 tương tự --soft nhưng commit cuối k chuyển vào vùng staging mà bị hủy luôn.
+Nếu đã dùng git add để cập nhập vào staging-> dùng git reset --hard sẽ undo tất cả các lệnh git add. Còn nếu muốn hủy 1 file nào đó trong vùng staging chứ kp tất cả-> dùng git reset -- <tên file>
+Pb: Lệnh git restore <file/folder/.> sẽ quay lại lần staging or commit mới nhất của file nào or tât cả => k hoạt động
+Lệnh git reset --hard/ sẽ quay lại lần commit mới nhất tất cả. Quay lại tất cả các file hiện tại. Cẩn thận những file vừa sửa sẽ bị mất đấy nên k nên dùng --hard
+
+Hàm get reset --hard là hàm quay lại commit trước đó trong local repos. Xóa các commit hiện tại cho đến commit cũ nào đó của repos.
+Hàm git reset --hard <hash> là quay lại đến commit nào
+
+
+
+# git log
+git log: enter dòng tiếp; w trang tiếp; space trang trước; q thoát; ?pattern tìm; n vị trí tìm kiếm phía sau; đến kết quả phía trước. 
+git log -2
+git log -p -2
+git log --stat/shortstat -5 => thống kê
+git log --stat -10 --oneline => kết hợp
+Lọc:
+git log --after="<năm>-<tháng>-<ngày>" --before="2019-12-31"
+git log --author="<tên author>"
+git log --grep="<thông tin ghi chú về commit>" => lọc message của commit chứa j
+git log --oneline -- <link đến file> => commit về 1 file cụ thể
+git log --oneline --shortstat -S"chữ" => nội dung cập nhập có chữ gì
+git log --merges/--no-merges => lọc các commit bth hay commit merges
+format:
+git log --pretty=format:"%h - %an %s - %H" --date="short" => format hiển thị theo ngày với %H là mã hash đủ, %h mã hash short, %an là người commit, %s là message commit
+git log --graph --pretty="%h %an %s" --date="short" => trực quan nhất là xem đc merge như nào
+git log --word-diff => xem rõ sự thay đổi từng từ 1 qua mỗi commit. Nội dung bị loại bỏ hiển thị trong [-<>-], nd thêm vào hiển thị trong {+<>+}
+git log --pretty=oneline là dạng viết dài của git log --oneline
+-> git log --oneline chỉ in ra các commit theo thứ tự thời gian; git log -oneline graph sẽ in ra gộp nhánh
+
+gitk xem giao diện luôn
+
+
+
+# git diff
+git diff: thay đổi thư mục làm vc chưa chỉ mục vào vùng staging so với commit cuối
+git diff --staged: check thay đổi index staging với commit cuối
+git diff hash-commit1 hash-commit2
+git diff branch1 branch2
+
+
+
+# git clone
+Khi clone, nó tự động tạo kết nối đến repos, để có thể push thì kết nối phải có tên là origin, check với: git remote -v
+git clone <git path> <des> => des mặc định là thư mục hiện tại, git path có thể là https url, ssh, đường dẫn local drive => clone chỉ lấy nhánh đang hoạt động
+git branch --remote => xem tất cả các nhánh của repos remote
+Chú ý các branch của remote luôn có name dạng origin/<tên branch>
+
+git clone -b <branch> <url> => chỉ clone về 1 nhánh
+
+
+
+# git checkout
+git checkout <hash> <link file> => phục hồi nội dung file nào ở vùng staging nếu có, k thì là từ commit cuối=> hiểu là vùng gần nhất vừa lưu bằng cách add or commit
+git checkout -- *.html => phục hồi tất cả file có đuôi html
+git checkout -- . => phục hồi tất cả
+git checkout <hash> => trở về 1 commit có mã hash nào đó. Head sẽ chuyển đến commit này và git ở chế độ head detached, ta đang làm vc trên 1 nhánh tạm thời được tạo ra. Nếu k tạo nhánh chính để lưu nó thì nhánh tạm thời sẽ mất khi chuyển nhánh
+Or dùng thay thế:
+git switch <tên nhánh> => k hoạt động
+git switch <tên nhánh> <hash> => tạo nhánh từ commit cuối là gì
+git switch -c <tên nhánh> => tạo nhánh từ commit cuối
+git switch --detach <mã hash> => làm vc tại nhánh tạm thời từ commit có mã hash => tương đương với git checkout <hash>
+git restore . => tương đương git checkout -- .
+=> trong git, khi ta thao tác vói file gì đó chuyển sang trạng thái modified or staged mà chưa commited-> sau đó ta làm gì vói file đó khiến các dữ liệu modified bị mất nó sẽ sinh error yêu cầu ta phải lưu lại r mới cho thực hiện lệnh
+
+git checkout <hash commit cũ> => đang ở nhánh tạm thời ở commit cũ, tức chế độ detach. Nếu k tạo hẳn 1 nhánh cho nó thì nhánh tạm thời này sẽ bị xóa sau khi chuyển nhánh
+git checkout -b <tên nhánh> => ép nhánh tạm thời vào đây => sau đó ta có thể gộp nhanh mới nhất vào nhánh này chính là 1 cách để quay về commit cũ trong github
+
+git checkout -b <tên nhánh mới local> origin/<tên nhánh remote> => tạo nhánh mới ở local theo remote
+git pull origin newBranch => pull 1 nhánh nào ở remote về nhánh hiện tại đang dùng ở local
+
+HEAD là con trỏ, nó trỏ tới commit hiện tại của nhánh hiện tại. Nếu trỏ tới 1 commit khác or 1 nhánh khác thì HEAD sẽ đổi
+
+git branch <tên branch> -> tạo 1 branch mới có mọi thứ của head hiện tại
+=>Tức là ta checkout 1 commit cũ r tạo branch mới-> thì branch mới đó sẽ trỏ đến cái HEAD hiện tại là cái branch tạm thời kia
+git branch -m old_branch new_branch -> đổi tên của old branch thành tên mới ở local
+
+git branch -v => liệt kê nhánh và commit cuối
+git branch --merged/--no-merged => liệt kê các nhánh đc/k đc merge với nhánh hiện tại
+git branch -a => hiển thị các nhánh có trên remote
+
+Chú ý khi ta thao tác trên 1 nhánh và commit 2 lần-> sau đó merge với master và push lên-> cái master tự có thêm 2 commit kia, chứ nó k gom lại làm 1 commit merge. Nếu muốn giảm số lượng commit rác thành 1 commit thì phải dùng squash.
+Tương tự commit nhiều lần ở local r push lên repos thì repos sẽ có tất cả các commit chứ k bị gom lại làm 1.
+Lệnh git push origin <tên nhánh remote> là push nhánh gì của local lên remote trùng tên nhé. Tức là ở local ta đang ở nhánh test nhưng push origin master thì nhánh master ở local sẽ push lên master của remote. Tức là buộc local phải có nhánh master, nếu k sẽ lỗi. Lệnh git push mặc đinh push nhánh hiện tại nhưng nhiều lúc nó yêu cầu phải viết cụ thể origin <tên branch cơ> => sai vì mỗi lần ở 1 nhánh mới hoàn toàn chưa có upstream thì ta mới phải set
+Khi ta checkout mã hash để thao tác ở chế độ detach trên 1 nhánh tạm thời dùng commit cũ thì khi chuyển nhánh thì nhánh tạm thời sẽ bị xóa. Còn k thì ta có thể thao tác với nhánh tạm thời thoải mái. Tuy nhiên nên switch -c để tạo ra 1 nhánh chuẩn chứ đừng hoạt động trên nhánh tạm thời
+
+Khi ta có 1 file-> add file đó và commit lên git -> xóa file đó đi-> git checkout <link đến file đó> -> file đó sẽ tự được lấy lại từ git local repos đã commit
+Vc commit có vai trò là lưu lại các thay đổi ở thời điểm hiện tại.
+
+
+
+# git merge
+git merge <tên branch> -m "comment" => merge cũng là 1 lệnh commit nên thêm message đc như này
+
+git merge: sẽ merge 1 nhánh vào 1 nhánh khác. Nó so sánh commit cơ sở chung cuối cùng của 2 nhánh và 2 commit cuối của 2 nhánh. Nếu k có xung đột -> tự động mọi thứ ok hết theo trình tự thời gian; Nếu có xung đột, nó tự động merge các thứ k có xung đột r ta phải tự xử lý xung đột-> ta chỉnh sửa lấy cái nào trong VSC-> git add . -> git commit -> thế là sinh ra commit cuối cùng giải quyết xung đột và merge thành công. Cách này nó so sánh 3 commit và tổng hợp lại thành commit merge cuối cùng(tức nó sinh thêm 1 commit merge nx)
+git rebase: base commit là các commit cơ sở của 1 nhánh. Khi đang ở nhánh A mà ta git rebase <nhánh B> thì mọi commit của nhánh B sẽ thành commit cơ sở của nhánh A-> các commit theo sau commit cơ sở của nhánh A sẽ thực hiện ngay sau đó-> nếu các commit đó có conflict với các commit cơ sở mới thêm-> ta phải chọn để xử lý conflict-> git add . -> git rebase --continue để chỉnh sửa các commit sau commit cơ sở của A thành 1 commit mới như những gì ta vừa chọn, có thể đổi message hay đổi tên sau đó nó sẽ tiếp tục như v đến khi hết các commit của A thì rebase xong
+=> ta phải áp dụng linh hoạt, 1 cái là biến các commit nào thành base r sửa từng commit của nhánh này theo base. 2 là ta so sánh 2 commit cuối cùng của 2 nhánh và tiến hành chọn cái nào khác biệt thôi
+Phân biệt: rebase và merge
+VD merge:
+Alpha: C1 -> C2 -> C3   ->   C4
+Beta:  C1 -> C2 ->   C5 -> C6
+=> Ta git checkout Alpha -> git merge Beta
+=> Nhánh Alpha biến thành: C1 -> C2 -> C3 -> C5 -> C6 -> C4 -> Merge Commit
+=> Thứ tự commit sau khi merge như nào là do ta resolve conflict như nào nó tự động khớp cho phù hợp
+VD rebase:
+Alpha: C1 -> C2 -> C3   ->   C4
+Beta:  C1 -> C2 ->   C5 -> C6
+=> Ta checkout Alpha -> git rebase Beta
+=> Nhánh Alpha biến thành: C1 -> C2 -> C5 -> C6 -> C3' -> C4'
+=> C3' và C4' là 2 commit C3 C4 của Alpha bị sửa đổi lại cho phù hợp với base commit C1->C2->C5->C6 
+
+=> Dùng merge là nó so sánh 2 commit cuối của 2 branch và chỗ nào không conflict tự động lấy cái có chữ, chỗ nào có conflict ta phải chọn rồi nó tự sắp xếp commit để có được commit cuối cùng là như v => Dùng khi ta muốn lấy 1 phần cái này, 1 phần cái kia r merge thành 1 cục thống nhất. 
+=> Dùng rebase là nó lấy commit của cái ta rebase vào làm base commit của nhánh hiện tại, sau đó sửa các commit sau nếu có conflict với điều kiện các commit trước đó là của cái mới => Dùng khi ta muốn chắc chắn tất cả commit của cái nào, sau đó các branch phụ ta add thêm các thứ vào branch chính đó
+
+Rebase dùng kiểu 1 branch fix lỗi, 1 branch đang làm việc => sau khi kết thúc ta lấy branch đang làm việc rebase cho nó làm base chính, sau đó branch fix lỗi ta chỉ add thêm cái gì vào branch chính thì ok
+=> Merge và rebase có thể không khác biệt gì nhau trong 1 vài TH dùng
+
+pb: git branch -d <tên nhánh muốn xóa> => xóa ở local; git push origin --delete <tên branch> => xóa ở remote
+=> xử lý nhánh quá tuyệt vời, chơi cả xung đột nhánh khi gộp luôn: https://xuanthulab.net/lam-viec-voi-nhanh-branch-tao-nhanh-gop-nhanh-trong-git.html
+Sau khi gọi merge: git mergetool => git mergetool --tool-help -> git mergetool --tool=<vimdiff/ tên tool> => dùng tool gì thì ghi vào. Trong VSC có sẵn tool giao diện để merge r
+Luôn chú ý: vị trí của head và hình dung sơ đồ của các nhánh trong đầu
+đang có commit C1
+git checkout test1
+<tạo 2 commit C2->C3>
+git checkout master
+git merge test1
+Nhánh master: C1 -> C3
+Nhánh test1: C1 -> C2 -> C3
+
+=> thông thường gộp nhánh ta dùng merge nhưng khi phức tạp cần phải đổi cả commit thì nên dùng rebase. Chứ thật ra 2 cách đa số đều có thể dùng với ý nghĩa như nhau. 
+Tình huống: 1 công ty làm 1 sản phẩm chia 2 nhánh. 1 nhánh do 1 team phát triển sản phẩm. 1 nhánh do 1 team chuyên fix bug. Khi bàn giao sản phẩm phải gộp lại. Khi đó ta dùng merge thì sẽ rất loạn nếu dự án lớn. Nhưng dùng base thì ta sẽ fix từng commit 1 theo trình tự thời gian thì ta sẽ so sánh được file nào được xử lý bug ntn và đổi commit tốt hơn.
+=> git checkout develop -> git merge bugfix -> or ngược lại đều đc
+git checkout bugfix -> git rebase develop -> đúng thứ tự này vì develop phải là base r sau đó mới fix bug đc chứ
+
+git rebase <tên nhánh A> => cho những commit của nhánh A áp dụng lên nhánh B-> chỉnh sửa chọn cái nào muốn lấy -> add r git rebase --continue -> Nó xen các commit của nhánh A vào trước các commit của nhánh hiện tại -> nếu muốn nhánh A đuổi kịp thì merge thôi
+=> Vc thay đổi lịch sử commit làm cho lệnh này rất phức tạp và k đc dùng nó khi đã push lên remote repos k thì sẽ rối tung
+pb: git rebase --abort sẽ abort cái rebase và checkout về original branch; git rebase --quit sẽ abort và giữ HEAD ở đúng vị trí hiện tại
+
+git rebase -i HEAD~N => p là commit giữ lại, s là squash sử dụng commit này nhưng đè vào commit trước đó, r là giữ lại commit này nhưng viết lại message
+Cách xóa 1 commit trên local: git rebase -i HEAD~N -> i -> commit mới nhất ở dưới cùng, muốn xóa commit nào thì xóa dòng của commit đó. Nếu k có conflict-> commit tự được xóa thành công. Nếu có conflict-> chọn-> git add . -> git rebase --continue -> s -> đổi message nếu thích -> :wq
+Tại sao lại xảy ra conflict được: chuỗi commit A->B->C -> B và C cùng sửa 1 file -> xóa commit B bằng rebase như trên-> xảy ra conflict nó so sánh A và C, nếu A và C khác nhau mà thao tác trên cùng 1 file-> xảy ra conflict => Thực chất cái này kp là conflict vì conflict xảy ra khi A đổi, B cx đổi file như A và ta chọn 1 trong 2 or cả 2. Chứ file A rỗng, file B đổi thì nó k gọi là conflict vì B mới hơn thì hiển nhiên theo B r. Hàm rebase nó kp conflict mà là nó set lại tập file ở base và ta xử lý cái file hiện tại so với base. Tức là git rebase -i HEAD~2 sẽ cho base bỏ ra 2 commit cuối và ta thao tác gì kệ ta theo các option-> sau đó sẽ nối lại và trong quá trình nối mà khác với thành phần base cuối thì phải chọn.
+Đó cx là cách xóa 1 commit trên local. Để xóa commit ở remote: đồng bộ remote và local-> xóa commit đó ở local-> git push origin +master -> dấu + trước tên nhánh sẽ ép hàm push thực hiện => ta cx có thể xóa trên remote bằng lệnh git reset --soft/--hard HEAD~N r sau đó gọi git push origin +<nhánh cx đc>
+
+HEAD là thú trỏ đến commit nào ở thời điểm hiện tại
+Chú ý hàm remote add là thêm 1 dự án mới toanh, hàm clone là dùng tiếp 1 dự án có sẵn
+
+=>cách merge code từ branch vào master:
+git checkout <tên nhánh> => mọi thao tác từ h trở đi là trên nhánh kia, có thể thêm, sửa ở nhánh master: git merge <tên branch>(nó merge trong git ở trên máy)
+git push (cho cái git trên máy lên trên github)
+(khi push chúng ta dùng đơn giản git push nhưng 1 số TH nó yêu cầu cái branch của ta phải là upstream branch dẫn đến ta phải git push --set-upstream origin <tên branch>)
+=>Tuy nhiên chúng ta thg k chỉnh sửa branch r merge lên nv mà ta chỉnh sửa hết 1 lần thôi r push nó lên github, sau đó ta sẽ merge trên web thông qua create pull request sau đó merge nó(nếu chọn squash and merge tức là có nhiều commit trong pull request thì nó sẽ hợp thành 1 commit r merge)=>merge xog ta quay lại terminal và pull
+
+Mỗi repos trong git hub được phân tách riêng. Ở mọi thời điểm trong dự án, ta luôn đang ở trong 1 branch của 1 repos nào đó:
+Ta có thể 1 repos khác vào repos hiện tại. Cứ clone 1 repos khác khi đang ở trong repos hiện tại. Nó k hiểu là add file đâu mà là add repos:
+add repos xong muốn xóa đi: git rm --cached -f <tên repos>
+Khi muốn thêm repos vào repos nhưng dưới dạng submodule: git submodule add <url> <tên submodule> => submodule giúp cho 1 module có thể dùng nhiều nơi
+Clone ở local repos: git clone "đường dẫn thư mục repos" 
+Khi ta thêm 1 repos vào 1 repos bằng git add như bth-> khi git add . cái repos lên remote thì các client khác request đến remote đó sẽ k có cái repos ta thêm vào
+Khi add submodule thì lại đầy đủ-> nên dùng submodule add
+
+=>tất cả những gì làm bên trên đều có thể thao tác bằng giao diện: VD: ấn dấu + là git add -> ấn v là commit -> gõ message là -m -> ấn push là push lên repos
+
+Nếu merge thì ta sẽ merge trực tiếp như v. Cách khác là ta tạo ra 1 pull request, để tạo ta làm các bước y hệt merge nhưng ở đây ta sẽ k gọi hàm merge. Trước đó ta phải tạo ra 1 nhánh mới và thay đổi trên nhánh này. Sau đó push sự thay đổi này lên -> ta k merge nx mà vào trong github thì sẽ hiện ra 1 warning là 1 nhánh được tạo ra giống nhánh hiện tại nhưng sau đó bị thay đổi đi 1 chút, ta có đồng ý apply sự thay đổi đấy cho cả nhánh này nx k. Ta phải vào tạo 1 pull request và mọi người có thể xem và đưa ra kết luận là ok đổi đc, hay k đổi được thì khi đó quyết định merge hay k. Pull request tức là yêu cầu pull có được chấp nhận hay k. Các dự án lớn phải dùng để tránh sai
+Sau khi đã merge hay k quyết định r có thể xóa branch đi: git push origin --delete <tên branch>
+
+Lưu ý: Trong các dự án khi mà các thành viên k thực sự thân nhau thì vc tạo pull request rất quan trọng chứ kp kiểu nói mồm ai vào check như bth. merge request cho phép comment nên hiệu quả hơn. Vc tạo pull request thì sẽ tiện cho vc xử lý lỗi vì nếu gặp lỗi gì mà k cho merge thì lần sau ta sẽ xem lại được lỗi đó từ những pull request bị từ chối, còn check commit mà ra lỗi thì quá nhiều commit k đếm xuể. pull request có thể xem lại thì cũng là cách lưu lại mọi thứ để tránh mắc lỗi đó vào lần sau. Merge code thường xuyên để đảm bảo data mới nhất. 
+
+Nếu muốn 1 dự án nào thêm vào dự án của ta: submodule add
+Nếu muốn fork chỉnh sửa luôn 1 dự án nào: git clone
+
+khi nó yêu cầu xử lý conflict -> ta sửa r git add . để xác nhận đã solve conflict
+git merge --abort
+
+khi ta rebase lại gom các commit vào làm 1 thực sự rất tệ. Ta chỉ nên làm v ở local. Nếu remote và local có toàn commit khác nhau do ta rebase thì việc push lên nó lỗi là 2 dự án khác nhau hoàn toàn thì kb lấy cái nào. Khi đó ta phải thêm -f và push nhưng như v k tốt vì các commit cũ của remote sẽ mất hết và theo local. Ta k nên làm v trong dự án lớn làm khó mọi người trong team mà thích merge gì thì chỉ làm mình ta thôi
+
+
+
+# git remote
+Pb: lệnh git clone sẽ sinh ra 1 local repos copy của remote repos, và liên kết sẵn với remote repos r. Sau đó nếu ta có quyền truy cập thì sẽ push pull với remote repos được, nếu ta k có quyền thì phải tạo 1 repos mới khác và liên kết đến nó
+Lệnh git remote cho phép tạo, xóa kết nối giữa các local repos và remote repos: 
+git remote
+git remote -v -> hiển thị rõ hơn
+git remote add <remote name> url
+git remote rm <remote name>
+git remote rename <old name> <new name>
+git remote show <remote name>
+=>mỗi repos có 1 name riêng do ta tự đặt, mặc định là origin là tên remote repos đầu tiên
+
+Phân biệt: origin ở local là nhánh gốc mà ta đang thao tác đến hiện tại; ở local, ta đang ở nhánh nào thì ta chỉ có thể thao tác với nhánh đó thông qua origin chứ k được dùng tên nhánh trong 1 số lệnh; origin/<tên nhánh ở remote> tượng trưng cho nhánh ở remote nhưng ta có thể dùng trực tiếp tên nhánh ở remote được nếu k sợ nhầm
+
+git remote add origin <link đến github trống ta tạo ra>(báo địa chỉ cần push lên nếu thực hiện lệnh push)
+git push -u origin master(đăng lên github) => luôn update cho local repos giống central repos. Vào github sẽ thấy ngay commit nào có code nào bị sửa
+
+
+
+# git push
+git push --all => đẩy tất cả nhánh lên remote repos
+git push --tags => đẩy tất cả tags lên server
+git push --delete <tên nhánh> => xóa 1 nhánh trên server
+git push -u origin master => bắt buộc dùng khi push lên remote lần đầu tiên. Nó tương đương với --set-upstream. Gắn luồng upload tương ứng với nhánh của local. Sau khi dùng như nhau, các lần sau chỉ cần gọi git push
+git push origin <tên nhánh> -> push lên 1 nhánh cụ thể
+=> nếu tạo 1 repos mới thì phải init r remote add nó để thao tác lần đầu. Lúc này chưa có nhánh gì cả và ta k thể push hay làm gì cả vì chưa có gì. Tại local ta buộc phải khởi tạo dự án và push lên lần đầu tiên bằng lệnh bên trên thì mới thao tác tiếp các thứ khác. Còn nếu 1 dự án đã có thì hãy git clone nó. 
+Nhưng nếu k muốn dùng git clone cho mà init xong liên kết với 1 remote repos đã có thì cx ok với git remote add và lần pull đầu tiên sẽ phải thành: git branch --set-upstream-to=origin/<branch> master
+git push --set-upstream origin new_branch => cập nhập stream hiện tại vào branch nào
+
+Chú ý khi ta thao tác trên github, mọi thao tác của ta đều là local repos. Chỉ khi nào thực sự xác nhận vc push lên public repos thì ta mới gọi hàm push. 
+Kể cả việc ta tạo branch mới hay làm gì thì hàm commit chỉ thay đổi local, muốn đổi remote thì phải push
+
+
+
+# git pull
+Nếu repos bị xóa commit mà local muốn cập nhập -> git pull --rebase = git pull --rebase origin -> lệnh duy nhất cho thực hiện vc này-> biến base của remote thành base local
+
+kbh dùng git fetch mà chỉ dùng git pull:
+git pull origin master => Khi pull ở 1 remote đã có r từ 1 local trống. Nếu dùng git branch --set-upstream-to=origin/<branch> master thì các lần sau chỉ cần git pull thôi, k thì phải dùng như cách đầu mãi mãi. Nên nhớ là push và pull luôn có 1 cái upstream
+git pull = git pull origin 
+
+Khi ta đang ở nhánh 1, ta pull nhánh 1 ở remote về r chỉnh sửa, xong pull tiếp nhánh 1-> nó éo quay lại trạng thái trước khi chỉnh sửa đâu nhé, chỉ pull 1 lần đc thôi. Muốn thế thì reset --hard đi
+
+Mỗi nhánh có 1 pull stream và 1 push stream riêng, mỗi khi ta có 1 nhánh mới thì ta phải set pull stream và push stream cho nhánh đó:
+Khi ta push ở 1 nhánh chỉ có 2 TH: push nhánh này và push nhánh khác. Trong github 1 nhánh ở local chỉ được push lên remote khi 2 nhánh cùng tên, tức là ta đang ở nhánh test1 của local thì không thể push lên nhánh test2 của remote được mà remote cũng phải trùng tên là test1.
+Push lên nhánh này là test1: nếu nhánh này là nhánh mới toanh -> git push --set-upstream origin test1; nếu nhánh này đã từng được push lên remote 1 lần r thì git push phát là xong
+Push lên nhánh khác test2: không thể push nhánh test1 cho test2 được mà chỉ push test2 local cho test2 remote; Ta đang ở bất cứ nhánh nào nếu muốn push 1 nhánh ở local cho 1 nhánh ở remote trùng tên thì chỉ cần git push --set-upstream origin <tên nhánh trùng tên> => tức là đang ở test1 local ta có thể push test2 local lên test2 remote được mà k cần phải checkout vào test2
+Khi pull: 1 dự án ở local mà ta muốn dùng trên remote thì nên nhớ quy tắc, nếu dự án đó chưa có code gì cả thì ta dùng init rồi remote add origin rồi làm như bình thường, nhưng nếu dự án đó đã có code và ta là 1 người mới vào dự án thì nên clone đó ra chứ đừng remote add r pull về rắc rối. Ta có thể chỉ clone 1 nhánh với:
+git clone -b <branch> <remote_repo>
+Thông thường 1 nhánh khi tạo ra thường có pull stream rồi nhưng nếu chưa có pull stream thì chỉ cần set pull stream cho nhánh đó là xong: 1 nhánh tồn tại và đã code thì tất nhiên là có commit rồi, nhưng nếu ta pull về 1 nhánh khác gộp với nhánh này thì có thể xảy ra conflict, trong TH đó git sẽ tiến hành merge -> ta phải resolve conflict và add rồi commit rồi pull lại. Do đó pull stream nên set đúng nhánh k đc để conflict
+Để thêm pull stream: git branch --set-upstream-to=origin/<branch remote> -> sau đó chỉ cần git pull là được
+Or ta pull thủ công liên tục: git pull origin <tên branch remote>
+TH giả sử 1 dự án có sẵn nhưng ta không clone mà dùng init + remote add origin: git pull -> git checkout <tên nhánh ở remote ta muốn có ở local>
+
+
+
+# gitignore
+Gitignore là file có tên .gitignore do Git quy định. Nó sẽ liệt kê những file k mong muốn cho vào git.
+Nó giúp giảm lượng tài nguyên lưu trữ ở server vì ta có thể chọn những file mà IDE tự sinh ra trong quá trình build project. VD: k push lên git cái thư mục node modules
+Có thể bỏ qua các file cấu hình đường dẫn máy tính cá nhân. Các file này gây ra việc k build được project khi checkout về các máy của thành viên khác.
+Giúp giữ kín các file nếu như repository đang là public. Các file cấu hình hay tài khoản mật khẩu quan trọng nên tách ở file riêng và k push lên git. Ví dụ dùng file .env trong NodeJS
+
+Ta đặt file .gitignore vào thư mục root project thì git sẽ check và bỏ qua các file trong đó. Đó mới là điều kiện cần, điều kiện đủ phải là files k có git cache thì git mới bỏ qua, nếu file mà nằm trong git cache thì .gitignore sẽ vô tác dụng
+
+Đôi khi IDE or project tự sinh file .gitignore
+.gitignore ảnh hưởng mọi file và thư mục sibling và descendants nên thg thì 1 project chỉ cần 1 file .gitignore là đủ trừ khi dự án quá lớn
+
+Tool: https://www.toptal.com/developers/gitignore giúp tạo file gitignore, nó có sẵn các file mà thg bỏ qua trong project như .env,..
+Tùy các project khác nhau mà sẽ sinh ra file khác nhau
+
+
+# Các loại file git khác
+Khi khởi tạo 1 dự án trống mà muốn push lên github: vào folder trống-> touch .gitkeep -> add, commit, push lên
+Do github nó k chấp nhận vc push lên 1 folder trống, nó sẽ k xuất hiện-> khi đó phải tạo 1 file bất kỳ trong folder để push đc nó lên. Người ta cứ thích push khi mà folder trống đấy-> họ đặt cho file đó 1 cái tên là .gitkeep => chống được cả .gitignore
+
+.gitattributes là file cấu hình các thuộc tính trong git. Có tool sinh ra file .gitattributes cho các loại dự án khác nhau. Với nó ta có thể bảo khi các file được commit hay làm gì thì loại file nào sẽ thao tác được thêm tính năng nào đó như so sánh sự khác biệt hay lọc => ta k cần đi sâu
+
+
+
+# git stash
+Save data ở local để chuyển sang nhánh khác nhưng k muốn commit:
+làm việc nhánh A -> sửa nhánh A -> save change -> git stash -> chuyển nhánh B -> thao tác nhánh B -> quay về checkout
+nhánh A -> git stash pop để lấy lại dữ liệu từng stash ở nhánh A
+
+
+
+# git tag
+git tag = git tag -l = git tag --list => liệt kê các tag
+git tag -n => liệt kê các tag kèm message
+git tag -a <tên tag> -m "Phien ban thu nghiem" => tạo ra 1 tag và gắn vào commit cuối
+git tag -a <tên tag> -m "Phien ban thu nghiem 2" 9fceb02 => tạo 1 tag mới và đánh dấu vào commit cũ nào
+git show <tên tag> => xem thông tin về commit được gắn tag nào
+git tag <tên tag cũ> -f -m "<nd mới>" => update tag cũ thành nội dung mới là gì
+git tag <tên tag mới> <tên tag cũ> -f -m "<nd mới>" => tạo ra 1 tag mới cùng vị trí với tag cũ có nd là gì
+=> 1 tag chỉ gắn được vào 1 commit. 
+git push origin <tên tag> -> hàm git push chỉ cập nhập các dữ liệu k có tag
+git push origin --tags -> cập nhập tất cả các tag
+git checkout <tên tag> => trỏ HEAD đến commit được gắn tag nào -> thay thế cho vc dùng mã hash khó nhớ
+git checkout -b <tên branch> <tên tag> => tạo luôn nhánh mới co tên là gì từ commit có gắn với tag name nào => dùng tên tag thay cho mã hash trong các lệnh được
+git push --delete origin <tên tag> => xóa tag nào ở remote
+git tag -d <tên tag> => xóa tag nào ở local 
+
+
+
+# Mô hình git khác
+Mô hình git của google, facebook: k nhất thiết phải áp dụng vì dự án của họ rất lớn và đội ngũ dev ai cũng giỏi và có ý thức làm vc chuyên nghiệp. 
+Mô hình trunk-based development.
+Vc dùng git flow có thể xử lý các dự án lớn nhưng các dự án cực kỳ lớn thì lại là vấn đề khác. Vc chia branch làm 1 tính năng nhưng nếu tính năng lớn làm cả tháng mới xong và có rất nhiều nhánh branch như v cần được merge cùng lúc thì lúc viết và test đơn k có lỗi nhưng merge vào và QA test lại ra 1 đống bug. Nếu tính năng ấy cuối cùng khách hàng lại bảo chưa cần và tạm thời ẩn đi thì càng đau não, xong các vấn đề kiểu merge nhầm nhánh cũng khó xử lý. 
+
+Mô hình trunk-based dev sẽ chỉ có 1 nhánh duy nhất mà tất cả mọi người cùng merge chung vào. 
+Các tính năng đang làm dở có thể merge chung vào code production vì đằng nào tính năng đó cũng sẽ được tích hợp vào về sau. Ta merge luôn khi có vài chục thay đổi(toàn vẹn và chạy được) còn hơn là merge khi mỗi branch con có đến hàng trăm thay đổi và rơi vào cái bẫy trên. VD 1 tính năng có 100 module thì xong mỗi module là merge vào 1 nhánh chung luôn, điều này sẽ xử lý các vấn đề k tương thích, conflict được phát hiện từ sơm thay vì làm tất cả r merge mới phát hiện ra. Các module chẳng may có quan hệ với nhau thì có thể trao đổi để tái sử dụng của nhau luôn để giảm thiểu code trùng. 
+Mỗi người sẽ có những flag riêng để bật tính năng đang phát triển lên, có vấn đề thì tắt flag đi là xong.
+Nhánh release sẽ lấy từ nhánh chính ra và k có ai được thao tác trên nhánh release. Nếu có bug thì fix trên nhánh chính r lại cherry pick sang nhánh release. 
+=> Tại sao lại cần đội ngũ chuyên nghiệp khi dùng mô hình này? Mọi người phải có ý thức vì nếu 1 ai đó xóa tính năng của người khác hay đụng đến code người khác có thể gây rối loạn. Vc commit code phải được thực hiện trên từng cục nhỏ, k còn là tính năng mà chỉ là 1 phần tính năng. Vì code của tất cả nằm chung 1 chỗ nên 1 người bị lỗi thì mọi người đều lỗi nên code phải được review cẩn thận trước khi merge vào nhánh chính. Mọi người phải commit thường xuyên và hiển nhiên commit thì cũng phải pull thường xuyên. 
+
+
+
+# Gitflow workflow
+Gitflow Workflow định nghĩa cấu trúc phân nhánh nghiêm ngặt xung quanh bản release của dự án, phù hợp với mô hình scrum. Nó là quy trình set up nhánh, cách thức merge.
+5 loại branch cơ bản mà mọi dự án phải có:
+Nhánh master: có nhiều mốc và mỗi mốc là 1 bản ứng với 1 version. Được gắn tag trên mỗi version để người dùng vào biết là version bao nhiêu mà dùng. Ta chỉ có lúc khởi tạo và sự thay đổi trên nhánh này toàn là từ merge vào từ nhánh khác 
+Nhánh hotfix: nhánh này check out từ base là master và fix các lỗi chỉ có trên môi trường production r lại merge vào master, đúng quy tắc k ai thay đổi trực tiếp mã nguồn trên master nên phải làm như này. Nhánh này cần được check kỹ và test cẩn thận r mới merge vào master, sau khi merge có thể bỏ đi
+Nhánh develop: được lấy từ master branch để bắt đầu code cho dự án từ đầu tới cuối. Khi hoàn thành xong sẽ merge nó vào branch release để tạo ra 1 bản sao release cho sản phẩm. Trước khi merge vào branch release, nó cần được test xong chạy hoàn toàn ổn trên môi trường kiểm thử
+Nhánh release: code lấy từ branch develop khi xong hoàn toàn 1 bản version của sản phẩm. Tại đây code cần được test trên môi trường thực tế tronng phạm vi có thể(vì kp lúc nào cx test trên thực tế được luôn). Test kỹ càng và có được 1 bản build release để merge lên branch master và gắn tag vào là 1 version mới
+Nhánh feature: có thể có nhiều nhánh feature, các nhánh này đều checkout từ develop và phát triển 1 feature mới theo chuẩn đặt tên feature/<tên feature>. Code xong sẽ request đến branch develop để teamlead merge vào develop.
+=> Trong này chỉ có nhánh master, develop, release là luôn duy trì đến cuối dự án, nhánh feature hay hotfix sau khi merge thì có thể bỏ đi.
+Có nhiều cách chia branch kiểu khác vì có nơi họ dùng mỗi nhánh là 1 version còn được mà
+Còn nhiều loại nhánh khác mà tạo ra theo yêu cầu của dự án như pre-pro, QC, BugFix,..
+VD: có 1 dự án mới, ta tạo ra nhánh master chứa mỗi gitignore -> checkout từ master ra develop -> setup dự án chưa có gì là version 0 -> merge lên master -> checkout từ develop ra 1 feature -> code xong feature thì tạo pullrequest merge lên develop -> develop test xong có lỗi thì lại checkout feature fix or chỉnh sửa trực tiếp -> k có lỗi thì merge lên release -> test trên môi trường thực tế trong phạm vi có thể, nếu có lỗi thì chỉnh trực tiếp or develop fix r lại merge tiếp vào release -> merge lên master và gắn tag version 1 -> master bị lỗi thì checkout ra hotfix -> fix xong lại test r merge lên master đánh version v1.1 -> nhánh develop lại lấy tiếp từ nhánh master(chú ý nhánh develop có thể đổi từ trước nên lúc này data phải có bugfix hết từ master và phần code mới của develop vẫn ok) -> code tiếp tính năng cho v2 của ứng dụng và quy trình lặp lại
+
+
+
+# Other
+Tình huống: Ta join vào project, pull code về và bị conflict liên tục vì mấy file rác sinh ra. Khi đó ta nhét các file đó vào trong .gitignore r xóa file rác đi và commit lên-> 1 ông khác lại pull về và tạo lại file rác đó và ông ta cũng push lên-> file rác đó vẫn dính vào git bth dù đã nhét vào .gitignore => NN là vì file đó được git cache thu nạp r nên gitignore k có tác dụng-> ta có thể xóa bỏ nó bằng dòng lệnh: 
+git rm -r --cached /<link to file or folder đó> thì nó k còn bị dinh gitcache nx và k hiện nx. Nhưng thông thường khi thêm gitignore, ta sẽ xóa bỏ hết file của gitcache luôn để gitignore hoạt động đúng(xóa bỏ hết file của git cache thoải mái chả ảnh hưởng gì đâu) với:
+git rm -r --cached
+sau đó thao tác bth: add commit push
+
+Tình huống: đang ở nhánh master, ta checkout sang 1 nhánh mới, thao tác trên nhánh mới, nhưng r muốn nhánh master có những thứ đó => commit lên r quay về master và merge nó với nhanh đó
+Tình huống tương tự nhưng đang ở nhánh detach tạm thời => ta k thể có cách nào mà k tạo nhánh mới được vì k merge được, buộc tạo nhánh mới từ nhánh tạm thời r làm tương tự. Nếu k cho checkout thì ta cứ checkout -f rồi gọi merge thôi
+Tình huống: nếu ta commit -> lại commit --amend -> push thì ok 
+Nhưng nếu ta commit -> push -> lại commit --amend -> push thì éo vì bị khác với remote các base commit và yêu cầu phải pull trước-> éo cần ta cứ push -f là được. Nhưng rõ ràng push -f rất toang vì nhánh đó nếu có nhiều người cùng code thì hỏng. Do đó người ta bảo 1 khi đã push lên remote là phải chắc chắn 100% chứ éo phải push lên r lại sửa push lại -> k nên làm nv
+Nhưng nếu tình huống này xảy ra thì chỉ còn cách git pull về. Thực chất lệnh git pull chính là git merge là merge cái local với cái remote. Thông thường thì local luôn giống các commit với remote nên k cần nhưng khi có người khác sửa or ta push xong ngay sau đó dùng amend thì local khác remote và phải merge cái gì vào local như v. Sau khi chỉnh sửa xong, ta xác nhận việc chỉnh sửa với git add . -> sau đó tiếp tục merge với git merge --continue -> thế là merge xong và lệnh pull(chính là merge) đó sẽ trở thành 1 commit merge -> rồi sau đó ta có thể add commit push như ý ta
+
+Tổng kết cơ bản:
+=>Khởi tạo repos local và liên kết với remote và trỏ tới branch master:
+git init
+git remote add origin <link to empty repos>
+git push --set-upstream origin master => commit r mới gọi
+=>Commit mọi thay đổi:
+git add .
+git commit -m "<message>"
+git push
+=>Tạo pull request:
+git checkout -b <child>
+<đổi>
+git add .
+git commit -m "<message>"
+git push
+
+Tổng kết các thứ:
+Ta có thể tạo 1 dự án mới và thao tác: init-> remote add
+Ta có thể clone 1 dự án mẫu về và dùng nó thành 1 dự án mới của ta: git clone-> remote remove origin-> lên github tạo 1 repos mới -> remote add origin mới của ta
+Ta có thể dùng 1 dự án có sẵn trong dự án đang làm dở của ta: ở trong dự án đang làm dở-> git submodule add <url> <submodule>
+Ta có thể dùng 1 commit cũ của dự án hiện tại thành hiện tại của dự án hiện tại: ở dự án hiện tại-> git checkout <mã hash commit> . -> commit -> push
+Ta có thể tạo thêm nhánh cho dự án và thao tác từng nhánh và quyết định merge hay k: đang ở 1 nhánh nào đó-> git branch <tên nhánh mới> -> git checkout <tên nhánh mới> -> sửa đổi -> git add-> commit -> git push --set-upstream origin <tên nhánh> -> push -> nếu merge: quay lại master và git merge <tên branch>-> git push; nếu k merge: github browser và create và close pull request -> git push origin --delete <tên branch> (nếu muốn xóa branch)
+Ta có thể resolve conflict: dự án trong máy, 1 người commit lên, ta cũng chỉnh sửa trên local hiện tại-> git add-> git commit-> git push(báo lỗi conflic)-> git pull -> chọn sự thay đổi như thế nào->add -> commit -> git push
+Ta có thể thêm .gitignore cho dự án: thêm file .gitignore-> ghi các file muốn ignore-> git rm -r --cached -> git add-> commit-> add
+Ta có thể dùng 1 commit cũ của 1 dự án khác vào 1 dự án đang dở hiện tại: clone dự án đang làm dở-> git submodule add <url> <tên submodule> -> cd thư mục submodule-> git checkout <mã hash của lần commit cũ>-> cd .. -> git add-> git commit -> push => tương tự dùng cho 1 dự án mới cũng thế thôi
+Ta có thể làm chung team với 1 dự án đã có sẵn r: git clone dự án-> cd dự án-> chỉnh sửa-> git add-> git commit -> xin cấp quyền -> git push
+Ta có thể gom các commit ở local lại làm ở local và commit lên github 1 commit duy nhất: Tạo ra vài commit, giả sử gom 3 commit trên cùng thành 1-> git rebase -i HEAD~<number commits> -> sửa các commit muốn merge từ pick thành s để merge nó lên commit phía trước k có s mà nó gặp đầu tiên-> ESC-> :wq + Enter (-> nếu k cho chỉnh sửa comment luôn thì: git rebase --continue or muốn kết thúc thì git rebase --quit) -> ấn I để sửa-> comment các commit k cần với # và chỉnh sửa comment of commit-> ESC-> :wq + Enter
+Ta có thể commit liên tục lên local, quay lại commit cũ của local r code tiếp, lại commit và push cái hiện tại lên github: git checkout <mã hash> -> sửa đổi -> add -> commit-> git switch -c "tên nhánh mới" -> thế là có nhánh mới của commit cũ, làm gì tiếp thì tùy / git switch -c <tên nhánh> <mã hash>
+Ta có thể quay về trạng thái staged nếu có, k thì commit gần nhất: git restore .
+Ta sửa file và git add nó, chưa commit, nhưng r lại muốn quay lại commit trước đó chứ kp sau khi git add .: git reset --hard 
+
+Phân biệt 3 loại môi trường:
+Local: máy của dev, chỉ 1 người access
+Staging/QA environment: môi trường của team dev, môi trường để test khi code của ta tích hợp với code người khác thì có chạy đúng k, test thành công là cho lên production. Dev, Product Manager, BA, Tester được access.
+Production env: là người dùng thật, dữ liệu thật. Chỉ DBA, DevOps, Sysadmin, dev thân tín mới có thể truy cập vì sản phẩm đang chạy đụng hỏng là thiệt hại rất lớn. Nếu k phân quyền rõ ràng thì chẳng may xóa nhầm data production là toang.
+
+Setup môi trường là vc rất quan trọng của sysadmin, CTO, Tech leader, DevOps.
+Staging và Production nên đồng bộ về phần cứng tức môi trường dùng server giống nhau dù điều này khá khó vì production server luôn tốt hơn, data cx nên đồng bộ, nếu là data nhạy cảm cần mask lại trước khi sync.
+Chung code, khác configuration ở các môi trường. Có thể điều này là NN gây lỗi trên production khi mà staging chạy ngon và ta k tạo lại lỗi để fix trên dev env được.
+
+fix lỗi đăng nhập password k được mà phải dùng personmal access token:
+https://stackoverflow.com/questions/68775869/support-for-password-authentication-was-removed-please-use-a-personal-access-to
+
+Có thể tạo ra 1 organization trên github rồi thêm các repo vào organization đó. Trong organization có thể thêm các member với vai trò khác nhau
+
+Trong github có thể fork 1 project có sẵn để làm vc với nó trong 1 project mới của ta, đó cũng là 1 cách đóng góp cho dự án mã nguồn mở, phát triển sản phẩm mới dựa trên nền sản phẩm cũ
+

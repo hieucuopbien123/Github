@@ -1,0 +1,38 @@
+-> Version Control and Git:
+Central version control: SVN, TFS
+Distributed version control: Git, Mercurial
+1 số project hosting site: Github, Google Code, SourceForge, Bitbucket, CodePlex
+
+Version Control là hệ thống quản lý phiên bản. Git là 1 version control. Mỗi version là 1 branch từ branch master. Nó cũng thích hợp khi làm việc nhóm sẽ không phải code tay nx. 
+Có 2 loại version control: 1 là centralized version control system vd git. Khi đó mọi file dự án sẽ tập trung tại 1 server lớn duy nhất, mỗi lần commit là đang mỗi lần request vào central repository. Các client kết nối với central network qua mạng; 2 là distributed version control system. Mỗi thành viên sẽ có 1 local repository trên máy cá nhân. Mỗi người có thể tạo ra các branch, commit code và gộp code mà k ảnh hưởng gì đến central repository, k cần netowrk. Sau đó các thành viên sẽ gộp local repos với central repos.
+Ngoài git có các version control khác như SVN.
+Git chính là hệ thống quản lý phiên bản phân tán. Tức là mỗi client sẽ lấy tất cả database từ server để có toàn bộ project, sau đó tiến hành code, khác vói hệ thống quản lý phiên bản tập trung là mọi người request các file cần dùng từ server, khi server sập là toang. Do đó, mn dùng git sẽ thao tác chủ yếu ở local, k cần đến server, đa phần sau khi code xong người ta mới chạy git push. 
+
+Github free và unlimited bộ nhớ nhưng người ta chỉ thg dùng để lưu code. git free chỉ dùng public, muốn private thì bỏ phí ra.
+Cơ chế: tạo 1 local repos cho mỗi dự án trong máy, đăng file lên dự án, tương tác từ local repos với remote repos
+gitlab chính là remote repository
+Git là mô hình hệ thống, còn Github chỉ là công ty cung cấp dịch vụ máy chủ repository cho mn dùng theo cái hệ thống git kia. 
+
+Khi tải về git thì sẽ có đc 3 thành phần: Git GUI, Git Bash, Git CMD
+Nó là bộ công cụ giúp ta làm vc với github, giao tiếp giữa máy của ta và repository trong tài khoản github trên mạng.
+MSDos là OS đời cũ dùng commandline.
+PowerShell cũng tương tự của widow là cmd, or chính là Git CMD
+Terminal là của Linux hay chính là Git Bash. thực chất ta thao tác với Git là vì cái này là chính
+Terminal trên VSC cũng là Git Bash nhưng lệnh nó hơi khác. Khi cài nodejs thì terminal của VSC có thể dùng cho các package npm, yarn.
+=>Ta nên dùng Git bash để thao tác khi cần dùng như Linux
+=>Thay vì sử dụng GUI, ta thg dùng commandline sẽ tiện hơn và nhanh hơn. Ta nên dùng luôn cmd của các editor nếu nó hỗ trợ, nếu k thì dùng gitbash cx đc
+
+Github có sẵn trên trang chủ web, ta có thể thao tác với nó trên web k thôi or thao tác cùng với VSC=> nó có ích trong các dự án thao tác trong nhóm, nhiều ng 1 source
+Thao tác trên Github:
+Ta có thể tạo 1 dự án chứa code trên mạng, lấy code của người khác về, dùng các tiện ích trên git đơn giản, ví dụ: tạo 1 repository(readme or gitignore), tạo và dùng branch, commit sửa file,lệnh pull request,merge khi ổn,clone từ dự án khác.Giám sát commit,branch or đủ loại trên,comment trên code
+nhánh master luôn là nhánh chứa update mới nhất
+Mọi dự án trên github đều nên dùng 1 file readme
+paste từ bên ngoài vào Bash=> insert
+pwd,ls -lah(h là file size),cd ..,clear,mkdir,touch,nano,cat,rm,cp <src> <des>,git,find . -name "*.",grep "" <tên file>,code.
+vi => chuyển chế độ khỏi INSERT Mode với ESC, :q để thoát, :q! để thoát k lưu
+
+Git có 3 trạng thái: commited là dữ liệu đã lưu an toàn trong database(local); modified là dữ liệu đổi nhưng chưa lưu trong database(local); staged là đánh dấu các file đã modified và chuẩn bị được commited; untracked chỉ các file chưa được giám sát bởi git, là file tạo ra nhưng chưa add + commit file đó để git lưu trữ snapshot or các file đã tồn tại xong lại xóa đi
+
+Điều này chia git làm 3 area: thư mục làm vc(working tree) chứa bản sao phiên bản cụ thể của dự án; Thư mục git là nơi lưu database các file metadata(); Khu vực sắp xếp(staging) là 1 file nằm trong thư mục git chứa thông tin sẽ commit
+Cơ chế: git init tạo ra thư mục git và làm vc với working tree-> sửa đổi file trong working tree-> git add . để đánh dấu sẽ thay đổi gì vào khu vực staging-> git commit là commit các thứ trong staged lưu vào thư mục git.
+

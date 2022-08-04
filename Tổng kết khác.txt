@@ -1,0 +1,148 @@
+# Tổng kết mọi lệnh cơ bản của git:
+git --version
+git --help
+git config <>
+git init
+git add <>
+git status <>
+git commit <>
+git reset <>
+git log <>
+gitk
+git merge <tên branch> -m "<comment>"
+git diff <>
+git remote <>
+git clone <path> <des>
+git branch <>
+git checkout <>
+git switch <>
+git rm --cached <tên file>
+git push <>
+git mergetool <>
+git rebase <>
+git push <>
+git pull <>
+git submodule add <remote_url> <destination_folder>
+git tag <>
+
+
+
+# Tổng kết đầy đủ:
+git --version
+git --help
+
+git config --list
+git config --global/system user.name "<>"
+git config --global --edit #comment
+
+git init
+git init --bare
+
+git add -u
+git add *.c
+git add ./--all
+
+git status
+git status -s
+
+git commit -a -m "<>"
+git commit --amend -m "<>"
+
+git reset --soft/hard HEAD~1
+git reset -- <tên file>
+git reset --hard <hash>
+
+git log 
+git log -p -2
+git log --stat/shortstat -5
+git log --after="<năm>-<tháng>-<ngày>" --before="2019-12-31"
+git log --author="<tên author>"
+git log --grep="<thông tin commit>"
+git log --<link file>
+git log --oneline --shortstat -S"chữ"
+git log --merges/--no-merges
+git log --pretty=format:"%h - %an %s - %H" --date="short"
+git log --graph --pretty="%h %an %s" --date="short"
+git log --word-diff
+git log --pretty=oneline
+git log --decorate
+
+gitk
+
+git merge <tên branch> -m "<comment>"
+git merge --abort
+
+git diff --staged
+git diff <hash commit 1> <hash commit 2>
+git diff <branch 1> <branch 2>
+
+git clone <path> <des>
+git clone -b <branch> <url>
+
+git branch --remote
+git branch <tên branch mới>
+git branch -m "<old branch name>" "<new branch>"
+git branch -d <tên nhánh muốn xóa>
+git push origin --delete <tên branch>
+git branch -v
+git branch --merged/--no-merged
+git branch -a
+
+git checkout <hash> <linkfile>/.
+git checkout -- *.html
+git checkout --- .
+git checkout <hash>
+git checkout -b <tên nhánh mới> 
+git checkout -b <tên nhánh mới> <tên nhánh cũ>
+git checkout -f <tên nhánh cũ>
+git checkout <link to file>
+
+git switch <tên nhánh đã tồn tại>
+git switch -c <tên nhánh chưa có>
+
+git rm --cached <tên file>
+git rm --cached -f <tên repos>
+
+git mergetool --tool-help
+git mergetool --tool=vimdiff
+
+git rebase <tên nhánh>
+git rebase --continue
+git rebase --abort
+git rebase --quit
+git rebase -i HEAD~N
+
+git push <name> +<nhánh>
+git push --all
+git push --tags
+git push <name(origin)> --delete <tên nhánh>
+git push -u <name(origin)> <tên nhánh>
+git push <name> <tên nhánh>
+git branch --set-upsteam-to=<name> <nhánh>
+git push --set-upstream origin <nhánh>
+
+git pull --rebase origin
+git pull <name> <nhánh>
+git pull
+
+git remote -v
+git remote
+git remote add/set-url <name> <url>
+git remote rm <name>
+git rename <old name> <new name>
+git remote show <remote name>
+
+git submodule add <remote_url> <destination_folder>
+
+git tag -l
+git tag -n
+git tag -a <tên tag> -m "<message>" 
+git tag -a <tên tag> -m "<message>" <hash commit>
+git show <tên tag>
+git tag <tên tag cũ> -f -m "<message mới>"
+git tag <tên tag mới> <tên tag cũ> -f -m "<message mới>"
+git tag -d <tên tag>
+git push origin <tên tag>/--tags
+git checkout <tên tag>
+git checkout -b <tên branch> <tên tag>
+git push --delete origin <tên tag>
