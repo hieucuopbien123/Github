@@ -51,3 +51,5 @@ TH2: Sau khi các bạn làm việc xong nhánh alpha -> git checkout master và
 TH3: Đang làm việc tại nhánh master ở local tự dưng thấy 1 commit trước đó cần sửa đổi -> checkout nó và làm việc với nó trên beta -> sau khi sửa xong thì muốn master cũng có thì ta cho nó làm base bằng cách -> HEAD đang ở beta thì ta checkout beta và rebase với master -> master giờ là base của beta và HEAD đang ở beta -> lại phải checkout master merge với beta để master đuổi kịp beta(như TH1) -> xóa beta được
 
 Lỗi file name too long => fix: git config core.longpaths true
+
+Lỗi: unable to access The requested URL returned error: 400 k cho push => ta dùng: git remote rm origin -> add lại remote origin
