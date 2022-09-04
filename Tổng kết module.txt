@@ -480,3 +480,8 @@ Có thể tạo ra 1 organization trên github rồi thêm các repo vào organi
 
 Trong github có thể fork 1 project có sẵn để làm vc với nó trong 1 project mới của ta, đó cũng là 1 cách đóng góp cho dự án mã nguồn mở, phát triển sản phẩm mới dựa trên nền sản phẩm cũ
 
+-> Thao tác với gitbash:
+Copy trong Git Bash: giữ SHIFT -> left or right key-> enter
+Paste trong GitBash: Insert
+less <link tới file> => đọc file từng page, Q để dừng
+
