@@ -35,4 +35,3 @@ Git có 3 trạng thái: commited là dữ liệu đã lưu an toàn trong datab
 
 Điều này chia git làm 3 area: thư mục làm vc(working tree) chứa bản sao phiên bản cụ thể của dự án; Thư mục git là nơi lưu database các file metadata(); Khu vực sắp xếp(staging) là 1 file nằm trong thư mục git chứa thông tin sẽ commit
 Cơ chế: git init tạo ra thư mục git và làm vc với working tree-> sửa đổi file trong working tree-> git add . để đánh dấu sẽ thay đổi gì vào khu vực staging-> git commit là commit các thứ trong staged lưu vào thư mục git.
-

@@ -118,7 +118,7 @@ Nếu đã dùng git add để cập nhập vào staging-> dùng git reset --har
 Pb: Lệnh git restore <file/folder/.> sẽ quay lại lần staging or commit mới nhất của file nào or tât cả => k hoạt động
 Lệnh git reset --hard/ sẽ quay lại lần commit mới nhất tất cả. Quay lại tất cả các file hiện tại. Cẩn thận những file vừa sửa sẽ bị mất đấy nên k nên dùng --hard
 
-Hàm get reset --hard là hàm quay lại commit trước đó trong local repos. Xóa các commit hiện tại cho đến commit cũ nào đó của repos.
+Hàm git reset --hard là hàm quay lại commit trước đó trong local repos. Xóa các commit hiện tại cho đến commit cũ nào đó của repos.
 Hàm git reset --hard <hash> là quay lại đến commit nào
 
 
@@ -361,10 +361,12 @@ Tùy các project khác nhau mà sẽ sinh ra file khác nhau
 
 
 # Các loại file git khác
-Khi khởi tạo 1 dự án trống mà muốn push lên github: vào folder trống-> touch .gitkeep -> add, commit, push lên
+-> Khi khởi tạo 1 dự án trống mà muốn push lên github: vào folder trống-> touch .gitkeep -> add, commit, push lên
 Do github nó k chấp nhận vc push lên 1 folder trống, nó sẽ k xuất hiện-> khi đó phải tạo 1 file bất kỳ trong folder để push đc nó lên. Người ta cứ thích push khi mà folder trống đấy-> họ đặt cho file đó 1 cái tên là .gitkeep => chống được cả .gitignore
 
-.gitattributes là file cấu hình các thuộc tính trong git. Có tool sinh ra file .gitattributes cho các loại dự án khác nhau. Với nó ta có thể bảo khi các file được commit hay làm gì thì loại file nào sẽ thao tác được thêm tính năng nào đó như so sánh sự khác biệt hay lọc => ta k cần đi sâu
+-> Dùng .gitattributes: là file cấu hình các thuộc tính trong git. Có tool sinh ra file .gitattributes cho các loại dự án khác nhau. Với nó ta có thể bảo khi các file được commit hay làm gì thì loại file nào sẽ thao tác được thêm tính năng nào đó như so sánh sự khác biệt hay lọc => ta k cần đi sâu
+
+=> refer tới "Blockchain / Web3 lib / Web3 Advance"
 
 
 
@@ -403,6 +405,12 @@ Các tính năng đang làm dở có thể merge chung vào code production vì 
 Mỗi người sẽ có những flag riêng để bật tính năng đang phát triển lên, có vấn đề thì tắt flag đi là xong.
 Nhánh release sẽ lấy từ nhánh chính ra và k có ai được thao tác trên nhánh release. Nếu có bug thì fix trên nhánh chính r lại cherry pick sang nhánh release. 
 => Tại sao lại cần đội ngũ chuyên nghiệp khi dùng mô hình này? Mọi người phải có ý thức vì nếu 1 ai đó xóa tính năng của người khác hay đụng đến code người khác có thể gây rối loạn. Vc commit code phải được thực hiện trên từng cục nhỏ, k còn là tính năng mà chỉ là 1 phần tính năng. Vì code của tất cả nằm chung 1 chỗ nên 1 người bị lỗi thì mọi người đều lỗi nên code phải được review cẩn thận trước khi merge vào nhánh chính. Mọi người phải commit thường xuyên và hiển nhiên commit thì cũng phải pull thường xuyên. 
+
+-> Git branching strategies: git flow, github flow, gitlab flow
+https://www.gitkraken.com/learn/git/git-flow 
+=> nên dùng github flow. Đại khái nó giống như trava. Đặt tên nhánh feat/..., tạo pull request, nhánh develop phát triển liên tục, nhánh feat mở rộng từ nhánh develop, nhánh hotfix fix cái trong main, nhánh main phải là sản phẩm có khả năng deploy lấy từ nhánh develop ra trong quá trình làm. 
+Còn versioning có thể tạo từng repo 1 version or từng commit nhánh main là 1 version or mỗi version là 1 nhánh riêng khác nhau
+Mỗi flow có 1 ưu nhược điểm riêng như gitlab thì toàn nhánh version thôi
 
 
 
@@ -473,9 +481,6 @@ Setup môi trường là vc rất quan trọng của sysadmin, CTO, Tech leader,
 Staging và Production nên đồng bộ về phần cứng tức môi trường dùng server giống nhau dù điều này khá khó vì production server luôn tốt hơn, data cx nên đồng bộ, nếu là data nhạy cảm cần mask lại trước khi sync.
 Chung code, khác configuration ở các môi trường. Có thể điều này là NN gây lỗi trên production khi mà staging chạy ngon và ta k tạo lại lỗi để fix trên dev env được.
 
-fix lỗi đăng nhập password k được mà phải dùng personmal access token:
-https://stackoverflow.com/questions/68775869/support-for-password-authentication-was-removed-please-use-a-personal-access-to
-
 Có thể tạo ra 1 organization trên github rồi thêm các repo vào organization đó. Trong organization có thể thêm các member với vai trò khác nhau
 
 Trong github có thể fork 1 project có sẵn để làm vc với nó trong 1 project mới của ta, đó cũng là 1 cách đóng góp cho dự án mã nguồn mở, phát triển sản phẩm mới dựa trên nền sản phẩm cũ
@@ -484,4 +489,8 @@ Trong github có thể fork 1 project có sẵn để làm vc với nó trong 1 
 Copy trong Git Bash: giữ SHIFT -> left or right key-> enter
 Paste trong GitBash: Insert
 less <link tới file> => đọc file từng page, Q để dừng
+
+-> File README.md
+refer tới "## Tổng kết module HTML_CSS / # Shadow DOM và Virtual DOM"
+
 

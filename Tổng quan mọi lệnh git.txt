@@ -50,6 +50,18 @@ TH1: Sau đó nhánh master phát sinh lỗi và ta fix lỗi ở nhánh đó b�
 TH2: Sau khi các bạn làm việc xong nhánh alpha -> git checkout master và merge với alpha -> master có mọi thứ của alpha và đang là mới nhất (vì lần gộp này có xung đột so với alpha) -> có thể delete alpha rồi
 TH3: Đang làm việc tại nhánh master ở local tự dưng thấy 1 commit trước đó cần sửa đổi -> checkout nó và làm việc với nó trên beta -> sau khi sửa xong thì muốn master cũng có thì ta cho nó làm base bằng cách -> HEAD đang ở beta thì ta checkout beta và rebase với master -> master giờ là base của beta và HEAD đang ở beta -> lại phải checkout master merge với beta để master đuổi kịp beta(như TH1) -> xóa beta được
 
+-> TK Lỗi:
 Lỗi file name too long => fix: git config core.longpaths true
 
 Lỗi: unable to access The requested URL returned error: 400 k cho push => ta dùng: git remote rm origin -> add lại remote origin
+
+Fix lỗi đăng nhập password k được mà phải dùng personmal access token:
+https://stackoverflow.com/questions/68775869/support-for-password-authentication-was-removed-please-use-a-personal-access-to
+=> khi push mà yêu cầu nhập thì username là token, password bỏ trống
+
+Lỗi server hang up unexpected: 
+Lỗi này gây ra khi ta push lên git 1 lượng file lớn chỉ trong 1 lần nhưng băng thông mạng kém. Lỗi này nhiều lúc cũng xảy ra theo nhiều hướng dù chỉ đổi có 1 tí nhưng cũng k commit lên được. Có nhiều lệnh giúp fix:
+git config --global http.version HTTP/1.1 => lỗi này rất có thể do HTTP/2 đang dùng k phù hợp, chuyển về phiên bản cũ HTTP/1.1 rồi push thử r chuyển lại HTTP/2 sau
+git config http.postBuffer 524289000 => tăng lượng buffer để 1 lần có thể push nhiều hơn
+=> Cách tốt nhất vẫn phải là push từng phần và tìm chỗ mạng mạnh hơn. Mạng yếu thì bó tay.
+
