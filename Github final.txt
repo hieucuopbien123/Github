@@ -1,0 +1,65 @@
+-> Tortoise Git là 1 công cụ git ui vai trò giống như Github Desktop thôi
+
+-> Git flow là thứ được dùng nhiều nhất dù kp lúc nào cũng tuân theo đủ loại nhánh: feature -> develop -> release -> production -> master
+Nhánh master k cho phép commit trực tiếp mà chỉ được merge từ branch khác.
+Nhánh feature nên được xóa sau khi merge vì nh nhánh rất khó quản lý
+Sau khi code hết 1 cụm các feature vào trong nhánh develop tức 1 chức năng lớn đã hoàn thành -> nếu xác nhận sự ra mắt của sản phẩm thì sẽ merge vào nhánh release (các feature của 1 sản phẩm mà k chắc chắn ra mắt thì k cần merge vào develop từ đầu) -> fix bug tiếp ở nhánh release đến khi hết bug sẽ merge vào production -> cuối cùng mới vào master -> nhánh release fix hết bug cũng merge vào develop để code tiếp develop
+
+-> Git merge có 2 chế độ:
+Fast Forward: nếu có conflict, ta phải resolve chúng rồi commit
+Fast Forward Only: nếu có conflict, merge sẽ tự abort
+
+Chú ý cú pháp merge và rebase:
+git merge: sẽ thay đổi commit đúng theo trình tự thời gian. Nhánh A gọi git merge nhánh B tức gộp nhánh B vào nhánh A và sau cùng cả 2 nhánh cùng trạng thái
+git rebase: sẽ đổi base của 2 nhánh. Phần base là phần commit chung của cả 2. Nhánh A gọi git rebase nhánh B thì trình tự thời gian k được đảm bảo nữa mà nhánh B sẽ thành base của nhánh A tức nhánh A biến thành: [base gốc nhánh A][phần khác của nhánh B][phần khác của nhánh A ở cuối]
+
+Khi tạo merge request, phải resolve conflicts. Khi resolve conflicts, nó tương đương với vc merge từ target branch vào source branch
+Khi merge chú ý là có thể delete source branch hoặc squash toàn bộ commit trong source branch
+
+-> Squash là hành động gom nhiều commit lại làm một, dùng git rebase để làm điều này
+
+-> Phân biệt hàm: khi ta chạy git branch -a, nó hiển thị mọi nhánh nhưng thực ra là nó lưu 1 phiên bản remote cache ở trong local, VD ta chỉ clone 1 nhanh thì nó cũng tự tạo ra phiên bản cho các nhánh khác. Vc thao tác với các nhánh trong remotes như v có thể k chuẩn với nhanh remote gốc
+=> Hàm git fetch sẽ pull data từ nhánh remote về nhánh remote ở local nhưng k đổi phần local repository, ta cũng có thể chỉ fetch 1 nhánh nếu thích. Nó đổi phần nhánh màu đỏ có chữ remotes mà ta phải merge tiếp mới được.
+Tức là: git fetch + git merge(nhánh remotes ở local merge với nhánh hiện tại ở local) = git pull => tức fetch về nó chỉ ở nhánh tạm remotes, phải merge phát nữa mới tương đương được như pull.
+Do đó đôi khi: git pull <remotes branch> nó éo chạy vì nó tưởng nhánh ở remote ta đang gọi éo tồn tại vì k có trong phần branch màu đỏ mà phải get fetch r git merge nhánh ở local or pull lại mới được.
+
+-> Git là 1 loại distributed version control system, nó k có central repo (source of truth). Git free và opensource nên có thể tạo ra 1 ứng dụng tương tự dựa trên ứng dụng gốc
+
+-> Graph được tạo dựa trên commit, mỗi commit gắn với 1 or nhiều branch
+git diff  => k có tham số gì cả sẽ check khác biệt của current và staged
+Add xong nhận ra sai và k muốn add cái đó, có thể tự fix r add cái mới or dùng git reset .
+
+-> Clone 2 cách:
+HTTPS: đôi lúc phải nhập tk, mk (connect to git)
+SSH: trao đổi thông qua 1 SSH key, khi dùng nó sẽ lưu SSH key vào bảng và gửi kèm mỗi lần thao tác để xác nhận, do đó k cần input user name and password gì cả
+
+-> git config --list => show mọi config
+
+-> Commit conventions cú pháp chuẩn:
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+=> Tuân thủ cả dấu cách dòng.
+<type> có thể là feat/fix/build/cli/chore/docs/styles/refactor/test/perf
+[optional scope] là thứ mô tả section trong codebase bằng 1 danh từ như: lang, git, html, api, parser tùy ý
+[optional footer(s)] có thể là BREAKING CHANGE sẽ mô tả 1 sự thay đổi lớn. Có thể dùng dấu ! sau type/scope cũng mang ý nghĩa tương tự. Còn bth, footer là những thứ mô tả bth.
+
+VD multiline body:
+fix: prevent racing of requests
+
+Introduce a request id and a reference to latest request. Dismiss incoming responses other than from latest request.
+Remove timeouts which were used to mitigate the racing issue but are obsolete now.
+
+Reviewed-by: Z
+Refs: #123
+
+Có nơi, nó dùng scope đằng trước nhìn dễ hơn:
+VD: [GIT]feat: add data
+
+-> Lỗi SSL cerfiticate:
+K nên tắt verifySSL vì có thể bị tấn công bằng man in the middle. Ở phiên bản git hiện tại của window, có thể config cho git sử dụng schannel thay vì curl CA như trước. 
+Set với: git config --global http.sslbackend schannel
+
+
