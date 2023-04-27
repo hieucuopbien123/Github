@@ -62,4 +62,8 @@ VD: [GIT]feat: add data
 K nên tắt verifySSL vì có thể bị tấn công bằng man in the middle. Ở phiên bản git hiện tại của window, có thể config cho git sử dụng schannel thay vì curl CA như trước. 
 Set với: git config --global http.sslbackend schannel
 
+-> Đang làm việc ở branch A, người khác push lên 1 branch mới toanh là B, ta cần merge branch B vào A
+Nếu git branch -a sẽ k thấy nhánh B vì nó mới push lên, phải chạy git fetch sẽ thấy nhánh B. Ta checkout nhánh B sẽ đang ở nhánh tạm có nội dung giống nhánh B ở local. Đặc điểm của nhánh tạm này là đổi nhánh sẽ mất và k thể quay lại -> ta phải checkout -b B tiếp từ nhánh tạm để có nhánh B thực sự ở local. 
+Đang ở branch A, git merge branch B sẽ merge branch B vào A
+
 
