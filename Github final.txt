@@ -67,3 +67,58 @@ Nếu git branch -a sẽ k thấy nhánh B vì nó mới push lên, phải chạ
 Đang ở branch A, git merge branch B sẽ merge branch B vào A
 
 
+
+-> Dùng git cherry-pick
+Vấn đề 1: ta muốn 1 lần commit áp dụng vào cả 2 branch A và B
+Vấn đề 2: ta muốn lấy n commit bất kỳ từ branch A và áp dụng cho branch B. Tức mọi phần code thay đổi ở n commit trên branch A sẽ áp dụng cho B
+
+Lệnh git merge 2 branch bằng cách kết hợp các commit lại và sinh ra commit merge ở cuối. Còn git rebase nhánh B khi đang ở nhánh A sẽ thay đổi base nhánh A thành nhánh B và thêm các commit của A vào cuối. Cả 2 cái đều k giải quyết được mà phải dùng git cherry-pick
+
+--> Bốc 1 commit bất kỳ từ nhánh A sang nhánh B:
+git cherry-pick [--edit] [-n] [-m parent-number] [-s] [-x] [--ff]
+		  [-S[<keyid>]] <commit>…
+git cherry-pick --continue
+git cherry-pick --quit
+git cherry-pick --abort
+
+VD1 lấy commit từ 1 branch bỏ vào master:
+git checkout master
+git cherry-pick <nhánh>~1
+
+Hoặc chỉ định hash commit: git cherry-pick <hash commit> => vì hash commit luôn là duy nhất nên k cần xđ branch nào
+
+VD2 lấy n commits từ 1 brach bỏ vào master
+# Nếu muốn thêm 1 vài commit, không liên tục
+git cherry-pick commit_id1 commit_id3
+
+# Nếu muốn thêm 1 loạt commit lần lượt cạnh nhau
+git cherry-pick commit_id1...commit_id5
+
+# Với code trên, thì commit_id1 sẽ ko được thêm vào. Để đưa commit được tính vào trong branch muốn thêm thì:
+git cherry-pick commit_id1^..commit_id5
+
+VD3 apply 1 commit A cho cả 2 branch-X và branch-Y
+# Đang ở branch-X, thực hiện commit để tạo ra commit A
+git add -A
+git commit -m " finish commit A"
+
+# Checkout sang branch Y và dùng cherry-pick
+git checkout branch-Y
+git cherry-pick branch-X => tự dùng commit trên cùng
+
+=> Cherry pick cũng có conflict, phải resolve, add r commit lại
+
+
+
+-> Dùng git reflog => biện pháp cuối cùng
+git reflog => xem lịch sử thao tác git trên mọi nhánh
+git reflog a => xem lịch sử thao tác git chỉ trên nhánh a
+
+Khôi phục branch x đã bị xóa mà chưa push:
+git reflog => hiển thị lịch sử thao tác git, ta tìm vị trí HEAD@{n} là thao tác mới nhất ở nhánh x muốn được khôi phục về. 
+git checkout -b x 'HEAD@{n}' => tạo lại nhánh x có trạng thái y như HEAD@{n}, ta có thể đặt tên nhánh là gì cx được.
+
+Khôi phục code khi lỡ dùng git reset --hard:
+
+
+
