@@ -111,14 +111,27 @@ git cherry-pick branch-X => tự dùng commit trên cùng
 
 
 -> Dùng git reflog => biện pháp cuối cùng
+Lệnh git reflog sẽ lưu lại lịch sử thao tác trên git như commit, xóa branch, reset. Ta có thể undo các hành động, or thực hiện lại các hành động thoải mái
+
 git reflog => xem lịch sử thao tác git trên mọi nhánh
 git reflog a => xem lịch sử thao tác git chỉ trên nhánh a
 
-Khôi phục branch x đã bị xóa mà chưa push:
+- Khôi phục branch x đã bị xóa mà chưa push:
 git reflog => hiển thị lịch sử thao tác git, ta tìm vị trí HEAD@{n} là thao tác mới nhất ở nhánh x muốn được khôi phục về. 
 git checkout -b x 'HEAD@{n}' => tạo lại nhánh x có trạng thái y như HEAD@{n}, ta có thể đặt tên nhánh là gì cx được.
 
-Khôi phục code khi lỡ dùng git reset --hard:
+- Khôi phục code khi lỡ dùng git reset --hard:
+1) Nó không khôi phục được khi ta chưa commit code
 
+2) Đã commit code, chưa commit thêm gì, lỡ gọi git reset --hard HEAD~1 (xóa commit mới nhất) thay vì git reset --soft HEAD~1 (để sửa commit mới nhất), cần khôi phục commit đã xóa
+git reflog => thấy những thao tác cũ
+Ta tìm hành động cuối cùng trước khi xóa, thg ở đây là HEAD@{1} thì dùng: git reset --hard HEAD@{1} là xong
+
+3) Xóa commit cũ, thêm commit mới, lại muốn khôi phục commit cũ kia:
+git reflog => tìm id của hành động mà dùng để thêm commit cũ vào, 
+git cherry-pick <id hành động> => để thêm lại hành động đó vào nhánh mới nhất
+
+- Tương tự có thể tùy biến. VD ta muốn rebase từ develop vào feature nhưng lại rebase nhầm master vào feature. 
+Ta cần hoàn tác thì lại git reflog để tìm id của hành động gần nhất trước khi rebase -> git reset --hard HEAD@{n} với HEAD@{n} là hành động tìm được
 
 
