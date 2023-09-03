@@ -76,6 +76,29 @@ git checkout -f <tên nhánh> để force việc chuyển đổi\
 -> Cách làm các thao tác trên thông qua GUI VSC:
 sửa file=>biểu tượng 3->dấu +-> nhập mess->tick v->click 3 chấm=>push/Pull
 
+-> Git Feature Branch Workflow: là 1 workflow đầy đủ, klq tới gitflow => xàm
+Bắt đầu với nhánh main:
+git checkout main
+git fetch origin 
+git reset --hard origin/main
+=> Để có commit mới nhất của nhánh main
+
+git checkout -b new-feature
+
+git status
+git add <some-file>
+git commit
+git pull origin master
+Solve conflict
+git push -u origin new-feature
+
+Merge pull request
+Hoặc:
+git checkout main
+git pull
+git pull origin new-feature
+git push
+
 
 
 # git init:

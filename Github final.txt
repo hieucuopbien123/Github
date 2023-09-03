@@ -5,6 +5,9 @@ Nhánh master k cho phép commit trực tiếp mà chỉ được merge từ bra
 Nhánh feature nên được xóa sau khi merge vì nh nhánh rất khó quản lý
 Sau khi code hết 1 cụm các feature vào trong nhánh develop tức 1 chức năng lớn đã hoàn thành -> nếu xác nhận sự ra mắt của sản phẩm thì sẽ merge vào nhánh release (các feature của 1 sản phẩm mà k chắc chắn ra mắt thì k cần merge vào develop từ đầu) -> fix bug tiếp ở nhánh release đến khi hết bug sẽ merge vào production -> cuối cùng mới vào master -> nhánh release fix hết bug cũng merge vào develop để code tiếp develop
 
+Còn có hotfix checkout trực tiếp từ master rồi merge lại vào master luôn để fix các bug mà chỉ có trên môi trường production
+Ngoài nhánh release trước khi lên nhánh master (production), còn có: Pre-pro là bản deploy chạy tốt trên môi trường user test; QA là bản deploy chạy trên môi trường test của QA, với các account qa
+
 -> Git merge có 2 chế độ:
 Fast Forward: nếu có conflict, ta phải resolve chúng rồi commit
 Fast Forward Only: nếu có conflict, merge sẽ tự abort
@@ -123,7 +126,7 @@ git checkout -b x 'HEAD@{n}' => tạo lại nhánh x có trạng thái y như HE
 - Khôi phục code khi lỡ dùng git reset --hard:
 1) Nó không khôi phục được khi ta chưa commit code
 
-2) Đã commit code, chưa commit thêm gì, lỡ gọi git reset --hard HEAD~1 (xóa commit mới nhất) thay vì git reset --soft HEAD~1 (để sửa commit mới nhất), cần khôi phục commit đã xóa
+2) Đã commit code nhưng chưa push, chưa commit thêm gì, lỡ gọi git reset --hard HEAD~1 (xóa commit mới nhất) thay vì git reset --soft HEAD~1 (để sửa commit mới nhất), cần khôi phục commit đã xóa
 git reflog => thấy những thao tác cũ
 Ta tìm hành động cuối cùng trước khi xóa, thg ở đây là HEAD@{1} thì dùng: git reset --hard HEAD@{1} là xong
 
@@ -133,5 +136,14 @@ git cherry-pick <id hành động> => để thêm lại hành động đó vào 
 
 - Tương tự có thể tùy biến. VD ta muốn rebase từ develop vào feature nhưng lại rebase nhầm master vào feature. 
 Ta cần hoàn tác thì lại git reflog để tìm id của hành động gần nhất trước khi rebase -> git reset --hard HEAD@{n} với HEAD@{n} là hành động tìm được
+
+
+
+-> HEAD trong git
+HEAD chỉ định 1 commit của 1 nhánh hiện tại mà ta đang làm việc. Nó được lưu trong file .git/HEAD => đôi khi nó k chứa tham chiếu branch cụ thể mà là giá trị SHA-1 của 1 version cụ thể, đó là khi detached HEAD xảy ra 
+
+Trạng thái Detached HEAD là 1 trạng thái mà HEAD k ở commit mới nhất, khi đó để tránh mất data trong nhánh đang làm việc, nó checkout ra riêng 1 nhánh Detached HEAD. 
+VD: git checkout -b test-branch 56a4e5c08 => ta quay lại commit 56a4e5c08 ở 1 nhánh mới là test-branch. Nếu k tạo như v thì commit 56a4e5c08 sẽ ở trạng thái detached HEAD
+=> Khi làm việc, ta nên làm ở 1 nhánh cụ thể, tránh ở nhánh detached head dễ bị loạn code. 
 
 
