@@ -147,3 +147,18 @@ VD: git checkout -b test-branch 56a4e5c08 => ta quay lại commit 56a4e5c08 ở 
 => Khi làm việc, ta nên làm ở 1 nhánh cụ thể, tránh ở nhánh detached head dễ bị loạn code. 
 
 
+
+-> Cách save code vào stash và apply bất cứ lúc nào:
+Nên thực hiện bằng giao diện trên VSC là tốt nhất. Dùng extension gitlens:
+Chọn 1 list các file cần save => chuột phải stash changes, đặt tên bừa 
+Để lấy lại => click vào stash có nút apply tất cả vào nhánh hiện tại, có conflict thì resolve là xong
+
+
+
+-> Gitbook: Tool mạnh nhất tạo products docs. Nó k giúp tạo blog website mà dùng để tạo document kiểu hướng dẫn sử dụng product. Có nhiều phiên bản khác rất mạnh trên trang chủ.
+Tutorial dùng luôn trên VSC: https://code-literacy.medium.com/publish-your-book-online-with-gitbook-fc0ce9b7f12
+
+URL: https://manage.wix.com/dashboard => Web tạo blog thuần túy
+
+
+

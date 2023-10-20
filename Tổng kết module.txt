@@ -516,4 +516,10 @@ less <link tới file> => đọc file từng page, Q để dừng
 -> File README.md
 refer tới "## Tổng kết module HTML_CSS / # Shadow DOM và Virtual DOM"
 
+-> 1 commit message cần giúp: Tìm kiếm dễ dàng và hiểu được là nó cụ thể làm gì
+[Hành động chung or sth giúp tìm dễ, biết ngay phần nào] - [Hành động chi tiết] - [Lưu ý nếu có]
+
+-> URL: https://star-history.com/#oven-sh/bun&Date
+Trang thống kê sự thay đổi star, nó cho biết 1 dự án được cộng đồng ủng hộ với tốc độ tăng trưởng như thế nào
+
 
